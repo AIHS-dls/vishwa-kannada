@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#0b3d91">
+
+  <title>ವಿಶ್ವ ಕನ್ನಡ | ಸುದ್ದಿ, ಇತಿಹಾಸ ಮತ್ತು ಜ್ಞಾನ</title>
+
+  <meta name="description" content="ವಿಶ್ವ ಕನ್ನಡ — ಸುದ್ದಿ, ಭಾರತೀಯ ಇತಿಹಾಸ, ಕರ್ನಾಟಕ ಇತಿಹಾಸ, ವಿಜ್ಞಾನ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ, ಸಿನಿಮಾ, ಕ್ರೀಡೆ ಹಾಗೂ ಕುತೂಹಲಕಾರಿ ವಿಷಯಗಳ ಕನ್ನಡ ತಾಣ.">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="container header-inner">
+
+      <a class="logo" href="#" onclick="showHome(); return false;">
+
+        <span class="logo-mark">ವಿ</span>
+
+        <span>
+          <b>ವಿಶ್ವ ಕನ್ನಡ</b>
+          <small>ಸುದ್ದಿ • ಜ್ಞಾನ • ಇತಿಹಾಸ</small>
+        </span>
+
+      </a>
+
+      <button
+        class="menu-btn"
+        onclick="toggleMenu()"
+        aria-label="ಮೆನು">
+        ☰
+      </button>
+
+      <nav id="nav">
+
+        <a href="#" onclick="showHome(); return false;">
+          ಮುಖಪುಟ
+        </a>
+
+        <a href="#" onclick="filterCategory('News'); return false;">
+          ಸುದ್ದಿ
+        </a>
+
+        <a href="#" onclick="filterCategory('Indian History'); return false;">
+          ಭಾರತೀಯ ಇತಿಹಾಸ
+        </a>
+
+        <a href="#" onclick="filterCategory('Karnataka History'); return false;">
+          ಕರ್ನಾಟಕ ಇತಿಹಾಸ
+        </a>
+
+        <a href="#" onclick="filterCategory('Science & Technology'); return false;">
+          ವಿಜ್ಞಾನ
+        </a>
+
+        <a href="#" onclick="filterCategory('Cinema'); return false;">
+          ಸಿನಿಮಾ
+        </a>
+
+        <a href="#" onclick="filterCategory('Sports'); return false;">
+          ಕ್ರೀಡೆ
+        </a>
+
+        <a href="#" onclick="filterCategory('Mystery'); return false;">
+          ರಹಸ್ಯ
+        </a>
+
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="container hero-grid">
+
+        <div>
+
+          <span class="eyebrow">
+            ಸುದ್ದಿ • ಜ್ಞಾನ • ಇತಿಹಾಸ
+          </span>
+
+          <h1>
+            ಸುದ್ದಿ ತಿಳಿಯೋಣ.<br>
+            <span>ಇತಿಹಾಸ ಅರಿಯೋಣ.</span>
+          </h1>
+
+          <p>
+            ಸುದ್ದಿ ತಿಳಿಯೋಣ, ಇತಿಹಾಸ ಅರಿಯೋಣ, ಜ್ಞಾನ ಹಂಚಿಕೊಳ್ಳೋಣ.
+            ಸುದ್ದಿಯಿಂದ ಇತಿಹಾಸದವರೆಗೆ, ವಿಜ್ಞಾನದಿಂದ ಕ್ರೀಡೆಯವರೆಗೆ —
+            ನಿಮಗೆ ಬೇಕಾದ ಮಾಹಿತಿಯೆಲ್ಲ ಒಂದೇ ತಾಣದಲ್ಲಿ.
+          </p>
+
+          <div class="hero-actions">
+
+            <button
+              class="primary"
+              onclick="filterCategory('News')">
+              ಇಂದಿನ ಸುದ್ದಿ
+            </button>
+
+            <button
+              class="secondary"
+              onclick="filterCategory('Indian History')">
+              ಇತಿಹಾಸ ಓದಿ
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="hero-card">
+
+          <div class="pulse"></div>
+
+          <p>ವಿಶೇಷ</p>
+
+          <h3>
+            ಜ್ಞಾನಕ್ಕೆ ಗಡಿಯಿಲ್ಲ
+          </h3>
+
+          <span>
+            ಪ್ರತಿದಿನ ಹೊಸ ವಿಷಯಗಳನ್ನು ತಿಳಿದುಕೊಳ್ಳಿ.
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SEARCH -->
+    <section class="container search-section">
+
+      <div class="search-box">
+
+        <span>⌕</span>
+
+        <input
+          id="search"
+          type="search"
+          placeholder="ಸುದ್ದಿ, ಇತಿಹಾಸ, ಸಿನಿಮಾ, ಕ್ರೀಡೆ... ಹುಡುಕಿ"
+          oninput="searchArticles()">
+
+      </div>
+
+      <div id="chips" class="chips"></div>
+
+    </section>
+
+
+    <!-- ARTICLES -->
+    <section class="container content-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="eyebrow">
+            ಇತ್ತೀಚಿನ ಲೇಖನಗಳು
+          </span>
+
+          <h2 id="sectionTitle">
+            ಮುಖ್ಯ ಲೇಖನಗಳು
+          </h2>
+
+        </div>
+
+        <button
+          class="link-btn"
+          onclick="showHome()">
+          ಎಲ್ಲಾ ಲೇಖನಗಳು →
+        </button>
+
+      </div>
+
+
+      <div
+        id="articles"
+        class="article-grid">
+      </div>
+
+
+      <div
+        id="empty"
+        class="empty"
+        hidden>
+
+        ಯಾವುದೇ ಲೇಖನಗಳು ಸಿಗಲಿಲ್ಲ.
+
+      </div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <section class="container categories">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span class="eyebrow">
+            ವಿಷಯಗಳನ್ನು ಅನ್ವೇಷಿಸಿ
+          </span>
+
+          <h2>
+            ವಿವಿಧ ವಿಷಯಗಳ ಪ್ರಪಂಚ
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="category-grid">
+
+
+        <button onclick="filterCategory('News')">
+
+          <b>📰 ಸುದ್ದಿ</b>
+
+          <span>
+            ದೇಶ-ವಿದೇಶದ ಪ್ರಮುಖ ಸುದ್ದಿಗಳು
+          </span>
+
+        </button>
+
+
+        <button onclick="filterCategory('Indian History')">
+
+          <b>🏛️ ಭಾರತೀಯ ಇತಿಹಾಸ</b>
+
+          <span>
+            ಭಾರತದ ಇತಿಹಾಸ ಮತ್ತು ಪರಂಪರೆ
+          </span>
+
+        </button>
+
+
+        <button onclick="filterCategory('Karnataka History')">
+
+          <b>🪷 ಕರ್ನಾಟಕ ಇತಿಹಾಸ</b>
+
+          <span>
+            ಕರ್ನಾಟಕದ ರಾಜವಂಶಗಳು ಮತ್ತು ಐತಿಹಾಸಿಕ ಸ್ಥಳಗಳು
+          </span>
+
+        </button>
+
+
+        <button onclick="filterCategory('Science & Technology')">
+
+          <b>🔬 ವಿಜ್ಞಾನ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ</b>
+
+          <span>
+            ವಿಜ್ಞಾನ, ಕೃತಕ ಬುದ್ಧಿಮತ್ತೆ, ಬಾಹ್ಯಾಕಾಶ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ
+          </span>
+
+        </button>
+
+
+        <button onclick="filterCategory('Cinema')">
+
+          <b>🎬 ಸಿನಿಮಾ</b>
+
+          <span>
+            ಕನ್ನಡ ಮತ್ತು ಭಾರತೀಯ ಚಿತ್ರರಂಗದ ಸುದ್ದಿಗಳು
+          </span>
+
+        </button>
+
+
+        <button onclick="filterCategory('Sports')">
+
+          <b>🏏 ಕ್ರೀಡೆ</b>
+
+          <span>
+            ಕ್ರಿಕೆಟ್ ಸೇರಿದಂತೆ ವಿವಿಧ ಕ್ರೀಡೆಗಳ ಸುದ್ದಿ ಮತ್ತು ಮಾಹಿತಿ
+          </span>
+
+        </button>
+
+
+        <button onclick="filterCategory('Mystery')">
+
+          <b>🔎 ರಹಸ್ಯ</b>
+
+          <span>
+            ಇತಿಹಾಸ, ಪುರಾತತ್ವ ಮತ್ತು ಕುತೂಹಲಕಾರಿ ರಹಸ್ಯಗಳು
+          </span>
+
+        </button>
+
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container footer-inner">
+
+      <div>
+
+        <b>ವಿಶ್ವ ಕನ್ನಡ</b>
+
+        <p>
+          ಎಲ್ಲರಿಗಾಗಿ ಜ್ಞಾನ • ಉಚಿತವಾಗಿ ಓದಿ
+        </p>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="#">
+          ನಮ್ಮ ಬಗ್ಗೆ
+        </a>
+
+        <a href="#">
+          ಸಂಪರ್ಕಿಸಿ
+        </a>
+
+        <a href="#">
+          ಗೌಪ್ಯತೆ
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+      © 2026 ವಿಶ್ವ ಕನ್ನಡ.
+      ಮೊಬೈಲ್ ಮತ್ತು ಕಂಪ್ಯೂಟರ್‌ಗಾಗಿ ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ.
+
+    </div>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js"></script>
+
+</body>
+</html>
