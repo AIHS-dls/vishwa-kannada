@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b3d91">
+  <title>ಭಾರತವಾಣಿ | News & Knowledge</title>
+  <meta name="description" content="News, Indian History, Karnataka History, Science & Technology, Cinema, Sports and Mystery.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container header-inner">
+      <a class="logo" href="#" onclick="showHome();return false;">
+        <span class="logo-mark">ಭಾ</span>
+        <span><b>ಭಾರತವಾಣಿ</b><small>News • History • Knowledge</small></span>
+      </a>
+      <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+      <nav id="nav">
+        <a href="#" onclick="showHome();return false;">Home</a>
+        <a href="#" onclick="filterCategory('News');return false;">News</a>
+        <a href="#" onclick="filterCategory('Indian History');return false;">Indian History</a>
+        <a href="#" onclick="filterCategory('Karnataka History');return false;">Karnataka</a>
+        <a href="#" onclick="filterCategory('Science & Technology');return false;">Science</a>
+        <a href="#" onclick="filterCategory('Cinema');return false;">Cinema</a>
+        <a href="#" onclick="filterCategory('Sports');return false;">Sports</a>
+        <a href="#" onclick="filterCategory('Mystery');return false;">Mystery</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">KNOWLEDGE • NEWS • STORIES</span>
+          <h1>ಜಗತ್ತನ್ನು ತಿಳಿಯಿರಿ.<br><span>ಇತಿಹಾಸವನ್ನು ನೆನಪಿಸಿಕೊಳ್ಳಿ.</span></h1>
+          <p>News, Indian History, Karnataka History, Science & Technology, Cinema, Sports ಮತ್ತು Mystery — ಒಂದೇ ಸ್ಥಳದಲ್ಲಿ.</p>
+          <div class="hero-actions">
+            <button class="primary" onclick="filterCategory('News')">ಇಂದಿನ News</button>
+            <button class="secondary" onclick="filterCategory('Indian History')">History ಓದಿ</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="pulse"></div>
+          <p>Featured</p>
+          <h3>ಜ್ಞಾನಕ್ಕೆ ಗಡಿ ಇಲ್ಲ</h3>
+          <span>ಪ್ರತಿದಿನ ಹೊಸ ವಿಷಯಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container search-section">
+      <div class="search-box">
+        <span>⌕</span>
+        <input id="search" type="search" placeholder="Search articles, history, cinema, sports..." oninput="searchArticles()">
+      </div>
+      <div id="chips" class="chips"></div>
+    </section>
+
+    <section class="container content-section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">LATEST STORIES</span>
+          <h2 id="sectionTitle">ಮುಖ್ಯ ಲೇಖನಗಳು</h2>
+        </div>
+        <button class="link-btn" onclick="showHome()">ಎಲ್ಲಾ ಲೇಖನಗಳು →</button>
+      </div>
+      <div id="articles" class="article-grid"></div>
+      <div id="empty" class="empty" hidden>ಯಾವುದೇ ಲೇಖನಗಳು ಸಿಗಲಿಲ್ಲ.</div>
+    </section>
+
+    <section class="container categories">
+      <div class="section-heading"><div><span class="eyebrow">EXPLORE</span><h2>ವಿಷಯಗಳ ಪ್ರಪಂಚ</h2></div></div>
+      <div class="category-grid">
+        <button onclick="filterCategory('News')"><b>📰 News</b><span>ದೇಶ-ವಿದೇಶದ ಪ್ರಮುಖ ಸುದ್ದಿಗಳು</span></button>
+        <button onclick="filterCategory('Indian History')"><b>🏛️ Indian History</b><span>ಭಾರತದ ಇತಿಹಾಸ ಮತ್ತು ಪರಂಪರೆ</span></button>
+        <button onclick="filterCategory('Karnataka History')"><b>🪷 Karnataka History</b><span>ಕರ್ನಾಟಕದ ರಾಜವಂಶಗಳು, ಸ್ಥಳಗಳು</span></button>
+        <button onclick="filterCategory('Science & Technology')"><b>🔬 Science & Technology</b><span>ವಿಜ್ಞಾನ, AI, Space ಮತ್ತು Tech</span></button>
+        <button onclick="filterCategory('Cinema')"><b>🎬 Cinema</b><span>ಕನ್ನಡ ಮತ್ತು ಭಾರತೀಯ ಚಿತ್ರರಂಗ</span></button>
+        <button onclick="filterCategory('Sports')"><b>🏏 Sports</b><span>ಕ್ರಿಕೆಟ್, ಫುಟ್ಬಾಲ್ ಮತ್ತು ಕ್ರೀಡೆ</span></button>
+        <button onclick="filterCategory('Mystery')"><b>🔎 Mystery</b><span>ರಹಸ್ಯ, ಪುರಾತತ್ವ ಮತ್ತು ಕುತೂಹಲ</span></button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div><b>ಭಾರತವಾಣಿ</b><p>Knowledge for everyone • Free to use</p></div>
+      <div class="footer-links"><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+    </div>
+    <div class="copyright">© 2026 Bharatavaani. Built for Mobile & Computer.</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
