@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="kn">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>ವಿಶ್ವ ಕನ್ನಡ - Admin</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+
+  margin: 0;
+
+  background: #f4f7fb;
+
+  color: #172033;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans Kannada",
+    sans-serif;
+
+}
+
+
+.header {
+
+  background: #0b3d91;
+
+  color: white;
+
+  padding: 25px 0;
+
+}
+
+
+.container {
+
+  width: min(680px, 92%);
+
+  margin: auto;
+
+}
+
+
+.header h1 {
+
+  margin: 0;
+
+  font-size: 26px;
+
+}
+
+
+.header p {
+
+  margin: 5px 0 0;
+
+  opacity: .85;
+
+}
+
+
+.card {
+
+  background: white;
+
+  margin: 25px auto;
+
+  padding: 22px;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 30px
+    rgba(0,0,0,.08);
+
+}
+
+
+label {
+
+  display: block;
+
+  font-weight: 700;
+
+  margin-top: 18px;
+
+  margin-bottom: 7px;
+
+}
+
+
+input,
+select,
+textarea {
+
+  width: 100%;
+
+  padding: 13px;
+
+  border: 1px solid #d8dfeb;
+
+  border-radius: 10px;
+
+  font-size: 15px;
+
+  font-family: inherit;
+
+}
+
+
+textarea {
+
+  min-height: 190px;
+
+  resize: vertical;
+
+}
+
+
+.preview {
+
+  width: 100%;
+
+  max-height: 280px;
+
+  object-fit: cover;
+
+  margin-top: 12px;
+
+  border-radius: 12px;
+
+  display: none;
+
+}
+
+
+.publish {
+
+  width: 100%;
+
+  margin-top: 22px;
+
+  padding: 15px;
+
+  border: 0;
+
+  border-radius: 11px;
+
+  background: #0b3d91;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+}
+
+
+.status {
+
+  display: none;
+
+  margin-top: 15px;
+
+  padding: 13px;
+
+  border-radius: 10px;
+
+  text-align: center;
+
+  line-height: 1.5;
+
+}
+
+
+.success {
+
+  display: block;
+
+  background: #e8f7ed;
+
+  color: #176b36;
+
+}
+
+
+.error {
+
+  display: block;
+
+  background: #fdeaea;
+
+  color: #a21d1d;
+
+}
+
+
+.small {
+
+  margin-top: 15px;
+
+  font-size: 12px;
+
+  color: #68758a;
+
+  line-height: 1.6;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+<div class="container">
+
+<h1>ವಿಶ್ವ ಕನ್ನಡ</h1>
+
+<p>Admin Panel • ಹೊಸ ಲೇಖನ ಪ್ರಕಟಿಸಿ</p>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div class="card">
+
+
+<form
+id="articleForm"
+method="POST"
+action="https://script.google.com/macros/s/AKfycbwaeZ4DuJM3gDCikPG36kFSNQav74q-6tPqFBUqM0YKbasUi7eskjOUiotjpBxlO4GvuQ/exec"
+target="hiddenFrame"
+>
+
+
+<label>
+ಲೇಖನದ ಶೀರ್ಷಿಕೆ
+</label>
+
+<input
+name="title"
+id="title"
+type="text"
+placeholder="ಉದಾ: ಕರ್ನಾಟಕದ ಇತಿಹಾಸದ ಒಂದು ಕುತೂಹಲಕಾರಿ ಅಧ್ಯಾಯ"
+required
+>
+
+
+<label>
+ವಿಷಯ
+</label>
+
+<select
+name="category"
+id="category"
+>
+
+<option value="News">
+ಸುದ್ದಿ
+</option>
+
+<option value="Indian History">
+ಭಾರತೀಯ ಇತಿಹಾಸ
+</option>
+
+<option value="Karnataka History">
+ಕರ್ನಾಟಕ ಇತಿಹಾಸ
+</option>
+
+<option value="Science & Technology">
+ವಿಜ್ಞಾನ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ
+</option>
+
+<option value="Cinema">
+ಸಿನಿಮಾ
+</option>
+
+<option value="Sports">
+ಕ್ರೀಡೆ
+</option>
+
+<option value="Mystery">
+ರಹಸ್ಯ
+</option>
+
+</select>
+
+
+<label>
+ಲೇಖನ
+</label>
+
+<textarea
+name="description"
+id="description"
+placeholder="ನಿಮ್ಮ ಲೇಖನವನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..."
+required
+></textarea>
+
+
+<label>
+ಚಿತ್ರ
+</label>
+
+<input
+id="imageFile"
+type="file"
+accept="image/*"
+>
+
+
+<img
+id="preview"
+class="preview"
+>
+
+
+<input
+type="hidden"
+name="imageData"
+id="imageData"
+>
+
+
+<input
+type="hidden"
+name="imageName"
+id="imageName"
+>
+
+
+<input
+type="hidden"
+name="date"
+id="date"
+>
+
+
+<button
+type="submit"
+class="publish"
+id="publishButton"
+>
+
+🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ
+
+</button>
+
+
+</form>
+
+
+<iframe
+name="hiddenFrame"
+id="hiddenFrame"
+style="display:none;"
+></iframe>
+
+
+<div
+id="status"
+class="status"
+></div>
+
+
+<div class="small">
+
+📌 Photo ಆಯ್ಕೆ ಮಾಡಿದರೆ ಅದನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ
+compress ಮಾಡಿ Google Driveಗೆ upload ಮಾಡಲಾಗುತ್ತದೆ.
+
+<br><br>
+
+ನಂತರ article ಮತ್ತು image link
+Google Sheetಗೆ save ಆಗುತ್ತದೆ.
+
+</div>
+
+
+</div>
+
+
+</main>
+
+
+<script>
+
+
+const imageFile =
+document.getElementById(
+  "imageFile"
+);
+
+
+const imageData =
+document.getElementById(
+  "imageData"
+);
+
+
+const imageName =
+document.getElementById(
+  "imageName"
+);
+
+
+const preview =
+document.getElementById(
+  "preview"
+);
+
+
+const form =
+document.getElementById(
+  "articleForm"
+);
+
+
+const status =
+document.getElementById(
+  "status"
+);
+
+
+const button =
+document.getElementById(
+  "publishButton"
+);
+
+
+/* =========================
+   IMAGE SELECT
+========================= */
+
+imageFile.addEventListener(
+"change",
+function() {
+
+  const file =
+    this.files[0];
+
+  if (!file) return;
+
+
+  preview.src =
+    URL.createObjectURL(
+      file
+    );
+
+  preview.style.display =
+    "block";
+
+
+  compressImage(file);
+
+});
+
+
+/* =========================
+   COMPRESS IMAGE
+========================= */
+
+function compressImage(file) {
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(event) {
+
+      const img =
+        new Image();
+
+
+      img.onload =
+        function() {
+
+          const maxWidth =
+            1200;
+
+
+          let width =
+            img.width;
+
+          let height =
+            img.height;
+
+
+          if (
+            width > maxWidth
+          ) {
+
+            height =
+              height *
+              maxWidth /
+              width;
+
+            width =
+              maxWidth;
+
+          }
+
+
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
+
+
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
+
+
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
+
+
+          ctx.drawImage(
+            img,
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          const compressed =
+            canvas.toDataURL(
+              "image/jpeg",
+              0.75
+            );
+
+
+          imageData.value =
+            compressed;
+
+
+          imageName.value =
+            file.name
+              .replace(
+                /\.[^/.]+$/,
+                ""
+              ) +
+            ".jpg";
+
+        };
+
+
+      img.src =
+        event.target.result;
+
+    };
+
+
+  reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+   PUBLISH
+========================= */
+
+form.addEventListener(
+"submit",
+function(event) {
+
+  event.preventDefault();
+
+
+  if (
+    imageFile.files.length > 0 &&
+    !imageData.value
+  ) {
+
+    showStatus(
+      "ಚಿತ್ರ ಇನ್ನೂ ಸಿದ್ಧವಾಗುತ್ತಿದೆ. ಸ್ವಲ್ಪ ಕಾಯಿರಿ.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "date"
+  ).value =
+    new Date()
+      .toLocaleDateString(
+        "en-GB"
+      );
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "ಪ್ರಕಟಿಸಲಾಗುತ್ತಿದೆ...";
+
+
+  showStatus(
+    "ಲೇಖನವನ್ನು ಪ್ರಕಟಿಸಲಾಗುತ್ತಿದೆ...",
+    "success"
+  );
+
+
+  /*
+    Native form POST
+    → Google Apps Script
+    → hidden iframe
+  */
+
+  form.submit();
+
+
+  /*
+    Give Apps Script time
+    to save the article
+  */
+
+  setTimeout(
+    function() {
+
+      showStatus(
+        "✅ ಲೇಖನ publish ಮಾಡಲು ಕಳುಹಿಸಲಾಗಿದೆ. Google Sheet ಪರಿಶೀಲಿಸಿ.",
+        "success"
+      );
+
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ";
+
+
+    },
+    5000
+  );
+
+
+});
+
+
+function showStatus(
+  message,
+  type
+) {
+
+  status.textContent =
+    message;
+
+  status.className =
+    "status " +
+    type;
+
+}
+
+</script>
+
+
+</body>
+
+</html>
