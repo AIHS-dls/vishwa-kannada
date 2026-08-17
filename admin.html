@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="kn">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,148 +7,82 @@
 <title>ವಿಶ್ವ ಕನ್ನಡ - Admin</title>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
-
 body{
   margin:0;
-  background:#f3f6fb;
-  color:#172033;
-  font-family:system-ui,
-  -apple-system,
-  BlinkMacSystemFont,
-  "Noto Sans Kannada",
-  sans-serif;
+  padding:20px;
+  background:#f4f6fa;
+  font-family:Arial,sans-serif;
 }
 
-.header{
-  background:#0b3d91;
-  color:white;
-  padding:25px 0;
-}
-
-.container{
-  width:min(680px,92%);
+.box{
+  max-width:600px;
   margin:auto;
-}
-
-.header h1{
-  margin:0;
-  font-size:26px;
-}
-
-.header p{
-  margin:5px 0 0;
-  opacity:.85;
-}
-
-.card{
   background:white;
-  margin:25px auto;
-  padding:22px;
-  border-radius:18px;
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  padding:25px;
+  border-radius:15px;
+}
+
+h1{
+  color:#0b3d91;
 }
 
 label{
   display:block;
-  font-weight:700;
-  margin:18px 0 7px;
+  font-weight:bold;
+  margin-top:20px;
+  margin-bottom:8px;
 }
 
-input,
-select,
-textarea{
+input,select,textarea{
   width:100%;
-  padding:13px;
-  border:1px solid #d8dfeb;
-  border-radius:10px;
-  font-size:15px;
-  font-family:inherit;
+  padding:12px;
+  box-sizing:border-box;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:16px;
 }
 
 textarea{
-  min-height:190px;
-  resize:vertical;
+  height:180px;
 }
 
-.preview{
-  width:100%;
-  max-height:280px;
-  object-fit:cover;
-  margin-top:12px;
-  border-radius:12px;
+#preview{
   display:none;
+  width:100%;
+  max-height:300px;
+  object-fit:cover;
+  margin-top:15px;
+  border-radius:10px;
 }
 
-.publish{
+button{
   width:100%;
-  margin-top:22px;
+  margin-top:20px;
   padding:15px;
-  border:0;
-  border-radius:11px;
   background:#0b3d91;
   color:white;
-  font-size:16px;
-  font-weight:800;
-  cursor:pointer;
+  border:0;
+  border-radius:8px;
+  font-size:17px;
+  font-weight:bold;
 }
-
-.publish:disabled{
-  opacity:.6;
-}
-
-.status{
-  display:none;
-  margin-top:15px;
-  padding:13px;
-  border-radius:10px;
-  text-align:center;
-}
-
-.success{
-  display:block;
-  background:#e8f7ed;
-  color:#176b36;
-}
-
-.error{
-  display:block;
-  background:#fdeaea;
-  color:#a21d1d;
-}
-
 </style>
 </head>
 
-
 <body>
 
-<header class="header">
-
-<div class="container">
+<div class="box">
 
 <h1>ವಿಶ್ವ ಕನ್ನಡ</h1>
 
-<p>Admin Panel • ಹೊಸ ಲೇಖನ ಪ್ರಕಟಿಸಿ</p>
-
-</div>
-
-</header>
-
-
-<main class="container">
-
-<div class="card">
+<p>ಹೊಸ ಲೇಖನ ಪ್ರಕಟಿಸಿ</p>
 
 <label>ಲೇಖನದ ಶೀರ್ಷಿಕೆ</label>
 
 <input
 id="title"
 type="text"
-placeholder="ಲೇಖನದ ಶೀರ್ಷಿಕೆ"
+placeholder="ಶೀರ್ಷಿಕೆ ಬರೆಯಿರಿ"
 >
 
 
@@ -157,31 +90,13 @@ placeholder="ಲೇಖನದ ಶೀರ್ಷಿಕೆ"
 
 <select id="category">
 
-<option value="News">ಸುದ್ದಿ</option>
-
-<option value="Indian History">
-ಭಾರತೀಯ ಇತಿಹಾಸ
-</option>
-
-<option value="Karnataka History">
-ಕರ್ನಾಟಕ ಇತಿಹಾಸ
-</option>
-
-<option value="Science & Technology">
-ವಿಜ್ಞಾನ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ
-</option>
-
-<option value="Cinema">
-ಸಿನಿಮಾ
-</option>
-
-<option value="Sports">
-ಕ್ರೀಡೆ
-</option>
-
-<option value="Mystery">
-ರಹಸ್ಯ
-</option>
+<option>News</option>
+<option>Indian History</option>
+<option>Karnataka History</option>
+<option>Science & Technology</option>
+<option>Cinema</option>
+<option>Sports</option>
+<option>Mystery</option>
 
 </select>
 
@@ -190,11 +105,11 @@ placeholder="ಲೇಖನದ ಶೀರ್ಷಿಕೆ"
 
 <textarea
 id="description"
-placeholder="ನಿಮ್ಮ ಲೇಖನವನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..."
+placeholder="ಲೇಖನ ಬರೆಯಿರಿ..."
 ></textarea>
 
 
-<label>ಚಿತ್ರ</label>
+<label>ಚಿತ್ರ ಆಯ್ಕೆ ಮಾಡಿ</label>
 
 <input
 id="imageFile"
@@ -202,369 +117,66 @@ type="file"
 accept="image/*"
 >
 
+
 <img
 id="preview"
-class="preview"
+alt="ಚಿತ್ರ Preview"
 >
 
 
-<button
-id="publish"
-class="publish"
-onclick="publishArticle()"
->
-
+<button>
 🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ
-
 </button>
 
-
-<div
-id="status"
-class="status">
 </div>
-
-</div>
-
-</main>
 
 
 <script>
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbwaeZ4DuJM3gDCikPG36kFSNQav74q-6tPqFBUqM0YKbasUi7eskjOUiotjpBxlO4GvuQ/exec";
-
-
-const imageInput =
+const imageFile =
 document.getElementById("imageFile");
-
 
 const preview =
 document.getElementById("preview");
 
 
-imageInput.addEventListener(
+imageFile.addEventListener(
 "change",
-function(){
+function(event){
 
   const file =
-    this.files[0];
+    event.target.files[0];
 
   if(!file){
-    return;
-  }
-
-  preview.src =
-    URL.createObjectURL(file);
-
-  preview.style.display =
-    "block";
-
-});
-
-
-function compressImage(file){
-
-  return new Promise(
-    (resolve,reject)=>{
-
-      const reader =
-        new FileReader();
-
-      reader.onload =
-        function(e){
-
-          const img =
-            new Image();
-
-          img.onload =
-            function(){
-
-              let width =
-                img.width;
-
-              let height =
-                img.height;
-
-              const maxWidth =
-                1200;
-
-              if(width > maxWidth){
-
-                height =
-                  height *
-                  maxWidth /
-                  width;
-
-                width =
-                  maxWidth;
-
-              }
-
-              const canvas =
-                document.createElement(
-                  "canvas"
-                );
-
-              canvas.width =
-                width;
-
-              canvas.height =
-                height;
-
-              const ctx =
-                canvas.getContext(
-                  "2d"
-                );
-
-              ctx.drawImage(
-                img,
-                0,
-                0,
-                width,
-                height
-              );
-
-              resolve(
-                canvas.toDataURL(
-                  "image/jpeg",
-                  0.75
-                )
-              );
-
-            };
-
-          img.onerror =
-            reject;
-
-          img.src =
-            e.target.result;
-
-        };
-
-      reader.onerror =
-        reject;
-
-      reader.readAsDataURL(file);
-
-    }
-  );
-
-}
-
-
-async function publishArticle(){
-
-  const title =
-    document
-      .getElementById("title")
-      .value
-      .trim();
-
-  const category =
-    document
-      .getElementById("category")
-      .value;
-
-  const description =
-    document
-      .getElementById("description")
-      .value
-      .trim();
-
-  const file =
-    imageInput.files[0];
-
-
-  if(!title){
-
-    showStatus(
-      "ಲೇಖನದ ಶೀರ್ಷಿಕೆ ಹಾಕಿ.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  if(!description){
-
-    showStatus(
-      "ಲೇಖನ ಬರೆಯಿರಿ.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const button =
-    document.getElementById(
-      "publish"
-    );
-
-
-  button.disabled =
-    true;
-
-  button.textContent =
-    "ಪ್ರಕಟಿಸಲಾಗುತ್ತಿದೆ...";
-
-
-  try{
-
-    let imageData = "";
-
-    let imageName = "";
-
-
-    if(file){
-
-      showStatus(
-        "ಚಿತ್ರ ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ...",
-        "success"
-      );
-
-      imageData =
-        await compressImage(file);
-
-      imageName =
-        file.name;
-
-    }
-
-
-    const formData =
-      new URLSearchParams();
-
-
-    formData.append(
-      "title",
-      title
-    );
-
-    formData.append(
-      "category",
-      category
-    );
-
-    formData.append(
-      "description",
-      description
-    );
-
-    formData.append(
-      "imageData",
-      imageData
-    );
-
-    formData.append(
-      "imageName",
-      imageName
-    );
-
-    formData.append(
-      "date",
-      new Date()
-        .toLocaleDateString(
-          "en-GB"
-        )
-    );
-
-
-    showStatus(
-      "Google Sheetಗೆ ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ...",
-      "success"
-    );
-
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/x-www-form-urlencoded"
-          },
-
-          body:
-            formData.toString()
-        }
-      );
-
-
-    const result =
-      await response.text();
-
-
-    console.log(result);
-
-
-    showStatus(
-      "✅ ಲೇಖನ ಪ್ರಕಟಿಸಲಾಗಿದೆ.",
-      "success"
-    );
-
-
-    document
-      .getElementById("title")
-      .value = "";
-
-    document
-      .getElementById("description")
-      .value = "";
-
-    imageInput.value = "";
 
     preview.style.display =
       "none";
 
-
-  }catch(error){
-
-    console.error(error);
-
-    showStatus(
-      "❌ ಪ್ರಕಟಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
-      "error"
-    );
-
+    return;
   }
 
 
-  button.disabled =
-    false;
-
-  button.textContent =
-    "🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ";
-
-}
+  const reader =
+    new FileReader();
 
 
-function showStatus(
-  message,
-  type
-){
+  reader.onload =
+    function(e){
 
-  const status =
-    document.getElementById(
-      "status"
-    );
+      preview.src =
+        e.target.result;
 
-  status.textContent =
-    message;
+      preview.style.display =
+        "block";
 
-  status.className =
-    "status " + type;
+    };
 
-}
+
+  reader.readAsDataURL(file);
+
+});
 
 </script>
 
 </body>
-
 </html>
