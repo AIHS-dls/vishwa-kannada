@@ -1,182 +1,326 @@
 <!DOCTYPE html>
 <html lang="kn">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ವಿಶ್ವ ಕನ್ನಡ - Admin</title>
+  <meta charset="UTF-8">
 
-<style>
-body{
-  margin:0;
-  padding:20px;
-  background:#f4f6fa;
-  font-family:Arial,sans-serif;
-}
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-.box{
-  max-width:600px;
-  margin:auto;
-  background:white;
-  padding:25px;
-  border-radius:15px;
-}
+  <title>ವಿಶ್ವ ಕನ್ನಡ | Admin</title>
 
-h1{
-  color:#0b3d91;
-}
+  <style>
 
-label{
-  display:block;
-  font-weight:bold;
-  margin-top:20px;
-  margin-bottom:8px;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-input,select,textarea{
-  width:100%;
-  padding:12px;
-  box-sizing:border-box;
-  border:1px solid #ccc;
-  border-radius:8px;
-  font-size:16px;
-}
+    body {
+      margin: 0;
+      background: #f3f6fb;
+      color: #18243a;
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Noto Sans Kannada",
+        sans-serif;
+    }
 
-textarea{
-  height:180px;
-}
+    .header {
+      background: #0b3d91;
+      color: white;
+      padding: 25px 0;
+    }
 
-#preview{
-  display:none;
-  width:100%;
-  max-height:300px;
-  object-fit:cover;
-  margin-top:15px;
-  border-radius:10px;
-}
+    .container {
+      width: min(650px, 92%);
+      margin: auto;
+    }
 
-button{
-  width:100%;
-  margin-top:20px;
-  padding:15px;
-  background:#0b3d91;
-  color:white;
-  border:0;
-  border-radius:8px;
-  font-size:17px;
-  font-weight:bold;
-}
-</style>
+    .header h1 {
+      margin: 0;
+      font-size: 27px;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      opacity: 0.85;
+    }
+
+    .card {
+      background: white;
+      margin: 25px auto;
+      padding: 22px;
+      border-radius: 16px;
+      box-shadow:
+        0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d5dce8;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    /* IMAGE PREVIEW */
+
+    #preview {
+      display: none;
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+      margin-top: 15px;
+      border-radius: 12px;
+      border: 2px solid #e1e6ef;
+    }
+
+    .preview-text {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #eaf7ee;
+      color: #176b36;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+  </style>
+
 </head>
+
 
 <body>
 
-<div class="box">
 
-<h1>ವಿಶ್ವ ಕನ್ನಡ</h1>
+<header class="header">
 
-<p>ಹೊಸ ಲೇಖನ ಪ್ರಕಟಿಸಿ</p>
+  <div class="container">
 
-<label>ಲೇಖನದ ಶೀರ್ಷಿಕೆ</label>
+    <h1>ವಿಶ್ವ ಕನ್ನಡ</h1>
 
-<input
-id="title"
-type="text"
-placeholder="ಶೀರ್ಷಿಕೆ ಬರೆಯಿರಿ"
->
+    <p>Admin Panel • ಲೇಖನ ಸಿದ್ಧಪಡಿಸಿ</p>
 
+  </div>
 
-<label>ವಿಷಯ</label>
-
-<select id="category">
-
-<option>News</option>
-<option>Indian History</option>
-<option>Karnataka History</option>
-<option>Science & Technology</option>
-<option>Cinema</option>
-<option>Sports</option>
-<option>Mystery</option>
-
-</select>
+</header>
 
 
-<label>ಲೇಖನ</label>
-
-<textarea
-id="description"
-placeholder="ಲೇಖನ ಬರೆಯಿರಿ..."
-></textarea>
+<main class="container">
 
 
-<label>ಚಿತ್ರ ಆಯ್ಕೆ ಮಾಡಿ</label>
-
-<input
-id="imageFile"
-type="file"
-accept="image/*"
->
+  <div class="card">
 
 
-<img
-id="preview"
-alt="ಚಿತ್ರ Preview"
->
+    <label>
+      ಲೇಖನದ ಶೀರ್ಷಿಕೆ
+    </label>
+
+    <input
+      id="title"
+      type="text"
+      placeholder="ಉದಾ: ಕರ್ನಾಟಕದ ಇತಿಹಾಸದ ಒಂದು ಕುತೂಹಲಕಾರಿ ಅಧ್ಯಾಯ"
+    >
 
 
-<button>
-🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ
-</button>
+    <label>
+      ವಿಷಯ
+    </label>
 
-</div>
+    <select id="category">
+
+      <option value="News">
+        ಸುದ್ದಿ
+      </option>
+
+      <option value="Indian History">
+        ಭಾರತೀಯ ಇತಿಹಾಸ
+      </option>
+
+      <option value="Karnataka History">
+        ಕರ್ನಾಟಕ ಇತಿಹಾಸ
+      </option>
+
+      <option value="Science & Technology">
+        ವಿಜ್ಞಾನ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ
+      </option>
+
+      <option value="Cinema">
+        ಸಿನಿಮಾ
+      </option>
+
+      <option value="Sports">
+        ಕ್ರೀಡೆ
+      </option>
+
+      <option value="Mystery">
+        ರಹಸ್ಯ
+      </option>
+
+    </select>
+
+
+    <label>
+      ಲೇಖನ
+    </label>
+
+    <textarea
+      id="description"
+      placeholder="ನಿಮ್ಮ ಲೇಖನವನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..."
+    ></textarea>
+
+
+    <label>
+      ಚಿತ್ರ ಆಯ್ಕೆ ಮಾಡಿ
+    </label>
+
+    <input
+      id="imageFile"
+      type="file"
+      accept="image/*"
+    >
+
+
+    <div
+      id="previewText"
+      class="preview-text"
+    >
+      ✅ ಚಿತ್ರ ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ
+    </div>
+
+
+    <img
+      id="preview"
+      alt="ಚಿತ್ರ Preview"
+    >
+
+
+  </div>
+
+
+</main>
 
 
 <script>
 
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
 const imageFile =
-document.getElementById("imageFile");
+  document.getElementById(
+    "imageFile"
+  );
+
 
 const preview =
-document.getElementById("preview");
+  document.getElementById(
+    "preview"
+  );
+
+
+const previewText =
+  document.getElementById(
+    "previewText"
+  );
 
 
 imageFile.addEventListener(
-"change",
-function(event){
+  "change",
+  function(event) {
 
-  const file =
-    event.target.files[0];
-
-  if(!file){
-
-    preview.style.display =
-      "none";
-
-    return;
-  }
+    const file =
+      event.target.files[0];
 
 
-  const reader =
-    new FileReader();
-
-
-  reader.onload =
-    function(e){
-
-      preview.src =
-        e.target.result;
+    if (!file) {
 
       preview.style.display =
-        "block";
+        "none";
 
-    };
+      previewText.style.display =
+        "none";
+
+      return;
+
+    }
 
 
-  reader.readAsDataURL(file);
+    /* File type check */
 
-});
+    if (!file.type.startsWith("image/")) {
+
+      alert(
+        "ದಯವಿಟ್ಟು JPG, PNG ಅಥವಾ ಬೇರೆ image file ಆಯ್ಕೆ ಮಾಡಿ."
+      );
+
+      imageFile.value = "";
+
+      return;
+
+    }
+
+
+    /* Preview */
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload =
+      function(e) {
+
+        preview.src =
+          e.target.result;
+
+        preview.style.display =
+          "block";
+
+        previewText.style.display =
+          "block";
+
+      };
+
+
+    reader.onerror =
+      function() {
+
+        alert(
+          "ಚಿತ್ರವನ್ನು ಓದಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+        );
+
+      };
+
+
+    reader.readAsDataURL(file);
+
+  }
+
+);
 
 </script>
 
+
 </body>
+
 </html>
