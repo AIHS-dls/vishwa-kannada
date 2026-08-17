@@ -2,232 +2,130 @@
 <html lang="kn">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ವಿಶ್ವ ಕನ್ನಡ - Admin</title>
 
 <style>
 
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
-body {
-
-  margin: 0;
-
-  background: #f4f7fb;
-
-  color: #172033;
-
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Noto Sans Kannada",
-    sans-serif;
-
+body{
+  margin:0;
+  background:#f3f6fb;
+  color:#172033;
+  font-family:system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  "Noto Sans Kannada",
+  sans-serif;
 }
 
-
-.header {
-
-  background: #0b3d91;
-
-  color: white;
-
-  padding: 25px 0;
-
+.header{
+  background:#0b3d91;
+  color:white;
+  padding:25px 0;
 }
 
-
-.container {
-
-  width: min(680px, 92%);
-
-  margin: auto;
-
+.container{
+  width:min(680px,92%);
+  margin:auto;
 }
 
-
-.header h1 {
-
-  margin: 0;
-
-  font-size: 26px;
-
+.header h1{
+  margin:0;
+  font-size:26px;
 }
 
-
-.header p {
-
-  margin: 5px 0 0;
-
-  opacity: .85;
-
+.header p{
+  margin:5px 0 0;
+  opacity:.85;
 }
 
-
-.card {
-
-  background: white;
-
-  margin: 25px auto;
-
-  padding: 22px;
-
-  border-radius: 18px;
-
-  box-shadow:
-    0 8px 30px
-    rgba(0,0,0,.08);
-
+.card{
+  background:white;
+  margin:25px auto;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
 }
 
-
-label {
-
-  display: block;
-
-  font-weight: 700;
-
-  margin-top: 18px;
-
-  margin-bottom: 7px;
-
+label{
+  display:block;
+  font-weight:700;
+  margin:18px 0 7px;
 }
-
 
 input,
 select,
-textarea {
-
-  width: 100%;
-
-  padding: 13px;
-
-  border: 1px solid #d8dfeb;
-
-  border-radius: 10px;
-
-  font-size: 15px;
-
-  font-family: inherit;
-
+textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #d8dfeb;
+  border-radius:10px;
+  font-size:15px;
+  font-family:inherit;
 }
 
-
-textarea {
-
-  min-height: 190px;
-
-  resize: vertical;
-
+textarea{
+  min-height:190px;
+  resize:vertical;
 }
 
-
-.preview {
-
-  width: 100%;
-
-  max-height: 280px;
-
-  object-fit: cover;
-
-  margin-top: 12px;
-
-  border-radius: 12px;
-
-  display: none;
-
+.preview{
+  width:100%;
+  max-height:280px;
+  object-fit:cover;
+  margin-top:12px;
+  border-radius:12px;
+  display:none;
 }
 
-
-.publish {
-
-  width: 100%;
-
-  margin-top: 22px;
-
-  padding: 15px;
-
-  border: 0;
-
-  border-radius: 11px;
-
-  background: #0b3d91;
-
-  color: white;
-
-  font-size: 16px;
-
-  font-weight: 800;
-
+.publish{
+  width:100%;
+  margin-top:22px;
+  padding:15px;
+  border:0;
+  border-radius:11px;
+  background:#0b3d91;
+  color:white;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
 }
 
-
-.status {
-
-  display: none;
-
-  margin-top: 15px;
-
-  padding: 13px;
-
-  border-radius: 10px;
-
-  text-align: center;
-
-  line-height: 1.5;
-
+.publish:disabled{
+  opacity:.6;
 }
 
-
-.success {
-
-  display: block;
-
-  background: #e8f7ed;
-
-  color: #176b36;
-
+.status{
+  display:none;
+  margin-top:15px;
+  padding:13px;
+  border-radius:10px;
+  text-align:center;
 }
 
-
-.error {
-
-  display: block;
-
-  background: #fdeaea;
-
-  color: #a21d1d;
-
+.success{
+  display:block;
+  background:#e8f7ed;
+  color:#176b36;
 }
 
-
-.small {
-
-  margin-top: 15px;
-
-  font-size: 12px;
-
-  color: #68758a;
-
-  line-height: 1.6;
-
+.error{
+  display:block;
+  background:#fdeaea;
+  color:#a21d1d;
 }
 
 </style>
-
 </head>
 
 
 <body>
-
 
 <header class="header">
 
@@ -244,43 +142,22 @@ textarea {
 
 <main class="container">
 
-
 <div class="card">
 
-
-<form
-id="articleForm"
-method="POST"
-action="https://script.google.com/macros/s/AKfycbwaeZ4DuJM3gDCikPG36kFSNQav74q-6tPqFBUqM0YKbasUi7eskjOUiotjpBxlO4GvuQ/exec"
-target="hiddenFrame"
->
-
-
-<label>
-ಲೇಖನದ ಶೀರ್ಷಿಕೆ
-</label>
+<label>ಲೇಖನದ ಶೀರ್ಷಿಕೆ</label>
 
 <input
-name="title"
 id="title"
 type="text"
-placeholder="ಉದಾ: ಕರ್ನಾಟಕದ ಇತಿಹಾಸದ ಒಂದು ಕುತೂಹಲಕಾರಿ ಅಧ್ಯಾಯ"
-required
+placeholder="ಲೇಖನದ ಶೀರ್ಷಿಕೆ"
 >
 
 
-<label>
-ವಿಷಯ
-</label>
+<label>ವಿಷಯ</label>
 
-<select
-name="category"
-id="category"
->
+<select id="category">
 
-<option value="News">
-ಸುದ್ದಿ
-</option>
+<option value="News">ಸುದ್ದಿ</option>
 
 <option value="Indian History">
 ಭಾರತೀಯ ಇತಿಹಾಸ
@@ -309,21 +186,15 @@ id="category"
 </select>
 
 
-<label>
-ಲೇಖನ
-</label>
+<label>ಲೇಖನ</label>
 
 <textarea
-name="description"
 id="description"
 placeholder="ನಿಮ್ಮ ಲೇಖನವನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ..."
-required
 ></textarea>
 
 
-<label>
-ಚಿತ್ರ
-</label>
+<label>ಚಿತ್ರ</label>
 
 <input
 id="imageFile"
@@ -331,38 +202,16 @@ type="file"
 accept="image/*"
 >
 
-
 <img
 id="preview"
 class="preview"
 >
 
 
-<input
-type="hidden"
-name="imageData"
-id="imageData"
->
-
-
-<input
-type="hidden"
-name="imageName"
-id="imageName"
->
-
-
-<input
-type="hidden"
-name="date"
-id="date"
->
-
-
 <button
-type="submit"
+id="publish"
 class="publish"
-id="publishButton"
+onclick="publishArticle()"
 >
 
 🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ
@@ -370,239 +219,167 @@ id="publishButton"
 </button>
 
 
-</form>
-
-
-<iframe
-name="hiddenFrame"
-id="hiddenFrame"
-style="display:none;"
-></iframe>
-
-
 <div
 id="status"
-class="status"
-></div>
-
-
-<div class="small">
-
-📌 Photo ಆಯ್ಕೆ ಮಾಡಿದರೆ ಅದನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ
-compress ಮಾಡಿ Google Driveಗೆ upload ಮಾಡಲಾಗುತ್ತದೆ.
-
-<br><br>
-
-ನಂತರ article ಮತ್ತು image link
-Google Sheetಗೆ save ಆಗುತ್ತದೆ.
-
+class="status">
 </div>
 
-
 </div>
-
 
 </main>
 
 
 <script>
 
-
-const imageFile =
-document.getElementById(
-  "imageFile"
-);
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwaeZ4DuJM3gDCikPG36kFSNQav74q-6tPqFBUqM0YKbasUi7eskjOUiotjpBxlO4GvuQ/exec";
 
 
-const imageData =
-document.getElementById(
-  "imageData"
-);
-
-
-const imageName =
-document.getElementById(
-  "imageName"
-);
+const imageInput =
+document.getElementById("imageFile");
 
 
 const preview =
-document.getElementById(
-  "preview"
-);
+document.getElementById("preview");
 
 
-const form =
-document.getElementById(
-  "articleForm"
-);
-
-
-const status =
-document.getElementById(
-  "status"
-);
-
-
-const button =
-document.getElementById(
-  "publishButton"
-);
-
-
-/* =========================
-   IMAGE SELECT
-========================= */
-
-imageFile.addEventListener(
+imageInput.addEventListener(
 "change",
-function() {
+function(){
 
   const file =
     this.files[0];
 
-  if (!file) return;
-
+  if(!file){
+    return;
+  }
 
   preview.src =
-    URL.createObjectURL(
-      file
-    );
+    URL.createObjectURL(file);
 
   preview.style.display =
     "block";
 
-
-  compressImage(file);
-
 });
 
 
-/* =========================
-   COMPRESS IMAGE
-========================= */
+function compressImage(file){
 
-function compressImage(file) {
+  return new Promise(
+    (resolve,reject)=>{
 
-  const reader =
-    new FileReader();
+      const reader =
+        new FileReader();
 
+      reader.onload =
+        function(e){
 
-  reader.onload =
-    function(event) {
+          const img =
+            new Image();
 
-      const img =
-        new Image();
+          img.onload =
+            function(){
 
+              let width =
+                img.width;
 
-      img.onload =
-        function() {
+              let height =
+                img.height;
 
-          const maxWidth =
-            1200;
+              const maxWidth =
+                1200;
 
+              if(width > maxWidth){
 
-          let width =
-            img.width;
+                height =
+                  height *
+                  maxWidth /
+                  width;
 
-          let height =
-            img.height;
+                width =
+                  maxWidth;
 
+              }
 
-          if (
-            width > maxWidth
-          ) {
+              const canvas =
+                document.createElement(
+                  "canvas"
+                );
 
-            height =
-              height *
-              maxWidth /
-              width;
+              canvas.width =
+                width;
 
-            width =
-              maxWidth;
+              canvas.height =
+                height;
 
-          }
+              const ctx =
+                canvas.getContext(
+                  "2d"
+                );
 
+              ctx.drawImage(
+                img,
+                0,
+                0,
+                width,
+                height
+              );
 
-          const canvas =
-            document.createElement(
-              "canvas"
-            );
+              resolve(
+                canvas.toDataURL(
+                  "image/jpeg",
+                  0.75
+                )
+              );
 
+            };
 
-          canvas.width =
-            width;
+          img.onerror =
+            reject;
 
-          canvas.height =
-            height;
-
-
-          const ctx =
-            canvas.getContext(
-              "2d"
-            );
-
-
-          ctx.drawImage(
-            img,
-            0,
-            0,
-            width,
-            height
-          );
-
-
-          const compressed =
-            canvas.toDataURL(
-              "image/jpeg",
-              0.75
-            );
-
-
-          imageData.value =
-            compressed;
-
-
-          imageName.value =
-            file.name
-              .replace(
-                /\.[^/.]+$/,
-                ""
-              ) +
-            ".jpg";
+          img.src =
+            e.target.result;
 
         };
 
+      reader.onerror =
+        reject;
 
-      img.src =
-        event.target.result;
+      reader.readAsDataURL(file);
 
-    };
-
-
-  reader.readAsDataURL(file);
+    }
+  );
 
 }
 
 
-/* =========================
-   PUBLISH
-========================= */
+async function publishArticle(){
 
-form.addEventListener(
-"submit",
-function(event) {
+  const title =
+    document
+      .getElementById("title")
+      .value
+      .trim();
 
-  event.preventDefault();
+  const category =
+    document
+      .getElementById("category")
+      .value;
+
+  const description =
+    document
+      .getElementById("description")
+      .value
+      .trim();
+
+  const file =
+    imageInput.files[0];
 
 
-  if (
-    imageFile.files.length > 0 &&
-    !imageData.value
-  ) {
+  if(!title){
 
     showStatus(
-      "ಚಿತ್ರ ಇನ್ನೂ ಸಿದ್ಧವಾಗುತ್ತಿದೆ. ಸ್ವಲ್ಪ ಕಾಯಿರಿ.",
+      "ಲೇಖನದ ಶೀರ್ಷಿಕೆ ಹಾಕಿ.",
       "error"
     );
 
@@ -611,13 +388,22 @@ function(event) {
   }
 
 
-  document.getElementById(
-    "date"
-  ).value =
-    new Date()
-      .toLocaleDateString(
-        "en-GB"
-      );
+  if(!description){
+
+    showStatus(
+      "ಲೇಖನ ಬರೆಯಿರಿ.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "publish"
+    );
 
 
   button.disabled =
@@ -627,66 +413,157 @@ function(event) {
     "ಪ್ರಕಟಿಸಲಾಗುತ್ತಿದೆ...";
 
 
-  showStatus(
-    "ಲೇಖನವನ್ನು ಪ್ರಕಟಿಸಲಾಗುತ್ತಿದೆ...",
-    "success"
-  );
+  try{
+
+    let imageData = "";
+
+    let imageName = "";
 
 
-  /*
-    Native form POST
-    → Google Apps Script
-    → hidden iframe
-  */
-
-  form.submit();
-
-
-  /*
-    Give Apps Script time
-    to save the article
-  */
-
-  setTimeout(
-    function() {
+    if(file){
 
       showStatus(
-        "✅ ಲೇಖನ publish ಮಾಡಲು ಕಳುಹಿಸಲಾಗಿದೆ. Google Sheet ಪರಿಶೀಲಿಸಿ.",
+        "ಚಿತ್ರ ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ...",
         "success"
       );
 
+      imageData =
+        await compressImage(file);
 
-      button.disabled =
-        false;
+      imageName =
+        file.name;
 
-      button.textContent =
-        "🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ";
-
-
-    },
-    5000
-  );
+    }
 
 
-});
+    const formData =
+      new URLSearchParams();
+
+
+    formData.append(
+      "title",
+      title
+    );
+
+    formData.append(
+      "category",
+      category
+    );
+
+    formData.append(
+      "description",
+      description
+    );
+
+    formData.append(
+      "imageData",
+      imageData
+    );
+
+    formData.append(
+      "imageName",
+      imageName
+    );
+
+    formData.append(
+      "date",
+      new Date()
+        .toLocaleDateString(
+          "en-GB"
+        )
+    );
+
+
+    showStatus(
+      "Google Sheetಗೆ ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ...",
+      "success"
+    );
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/x-www-form-urlencoded"
+          },
+
+          body:
+            formData.toString()
+        }
+      );
+
+
+    const result =
+      await response.text();
+
+
+    console.log(result);
+
+
+    showStatus(
+      "✅ ಲೇಖನ ಪ್ರಕಟಿಸಲಾಗಿದೆ.",
+      "success"
+    );
+
+
+    document
+      .getElementById("title")
+      .value = "";
+
+    document
+      .getElementById("description")
+      .value = "";
+
+    imageInput.value = "";
+
+    preview.style.display =
+      "none";
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "❌ ಪ್ರಕಟಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+      "error"
+    );
+
+  }
+
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ";
+
+}
 
 
 function showStatus(
   message,
   type
-) {
+){
+
+  const status =
+    document.getElementById(
+      "status"
+    );
 
   status.textContent =
     message;
 
   status.className =
-    "status " +
-    type;
+    "status " + type;
 
 }
 
 </script>
-
 
 </body>
 
