@@ -2,8 +2,11 @@
 <html lang="kn">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>ವಿಶ್ವ ಕನ್ನಡ | Admin</title>
 
@@ -32,13 +35,13 @@ body{
 }
 
 .container{
-  width:min(650px,92%);
+  width:min(680px,92%);
   margin:auto;
 }
 
 .header h1{
   margin:0;
-  font-size:27px;
+  font-size:28px;
 }
 
 .header p{
@@ -73,35 +76,76 @@ textarea{
 }
 
 textarea{
-  min-height:180px;
+  min-height:190px;
+  resize:vertical;
 }
 
 #preview{
   display:none;
   width:100%;
-  height:auto;
   max-height:400px;
   object-fit:contain;
-  margin-top:18px;
+  margin-top:15px;
   border-radius:12px;
   border:2px solid #ddd;
 }
 
-#message{
+#imageMessage{
   display:none;
-  margin-top:12px;
-  padding:12px;
+  margin-top:10px;
+  padding:10px;
   background:#e8f7ed;
   color:#176b36;
+  border-radius:8px;
+  font-weight:600;
+}
+
+button{
+  width:100%;
+  margin-top:22px;
+  padding:15px;
+  border:0;
   border-radius:10px;
-  font-weight:bold;
+  background:#0b3d91;
+  color:white;
+  font-size:17px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+#status{
+  display:none;
+  margin-top:15px;
+  padding:13px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:600;
+}
+
+.success{
+  display:block !important;
+  background:#e8f7ed;
+  color:#176b36;
+}
+
+.error{
+  display:block !important;
+  background:#fdeaea;
+  color:#a21d1d;
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <header class="header">
 
@@ -109,7 +153,7 @@ textarea{
 
 <h1>ವಿಶ್ವ ಕನ್ನಡ</h1>
 
-<p>Admin Panel • ಲೇಖನ ಸಿದ್ಧಪಡಿಸಿ</p>
+<p>Admin Panel • ಹೊಸ ಲೇಖನ ಪ್ರಕಟಿಸಿ</p>
 
 </div>
 
@@ -117,6 +161,7 @@ textarea{
 
 
 <main class="container">
+
 
 <div class="card">
 
@@ -128,7 +173,7 @@ textarea{
 <input
 id="title"
 type="text"
-placeholder="ಲೇಖನದ ಶೀರ್ಷಿಕೆ"
+placeholder="ಉದಾ: ಕರ್ನಾಟಕದ ಇತಿಹಾಸದ ಒಂದು ಕುತೂಹಲಕಾರಿ ಅಧ್ಯಾಯ"
 >
 
 
@@ -190,49 +235,72 @@ accept="image/*"
 >
 
 
-<div id="message">
+<div id="imageMessage">
 ✅ ಚಿತ್ರ ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ
 </div>
 
 
 <img
 id="preview"
-alt="ಆಯ್ಕೆ ಮಾಡಿದ ಚಿತ್ರದ Preview"
+alt="ಚಿತ್ರ Preview"
 >
 
 
+<button
+id="publishButton"
+onclick="publishArticle()"
+>
+
+🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ
+
+</button>
+
+
+<div id="status"></div>
+
+
 </div>
+
 
 </main>
 
 
 <script>
 
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwaeZ4DuJM3gDCikPG36kFSNQav74q-6tPqFBUqM0YKbasUi7eskjOUiotjpBxlO4GvuQ/exec";
+
+
 const imageFile =
-document.getElementById("imageFile");
+document.getElementById(
+  "imageFile"
+);
 
 const preview =
-document.getElementById("preview");
+document.getElementById(
+  "preview"
+);
 
-const message =
-document.getElementById("message");
+const imageMessage =
+document.getElementById(
+  "imageMessage"
+);
 
 
-imageFile.onchange =
+imageFile.addEventListener(
+"change",
 function(){
 
   const file =
-    imageFile.files[0];
-
-  console.log("Selected file:", file);
-
+    this.files[0];
 
   if(!file){
 
     preview.style.display =
       "none";
 
-    message.style.display =
+    imageMessage.style.display =
       "none";
 
     return;
@@ -246,59 +314,404 @@ function(){
       "ದಯವಿಟ್ಟು image file ಆಯ್ಕೆ ಮಾಡಿ."
     );
 
-    imageFile.value = "";
+    this.value = "";
 
     return;
 
   }
 
 
-  /*
-    Browser temporary URL
-    */
-
   const imageURL =
-    URL.createObjectURL(file);
+    URL.createObjectURL(
+      file
+    );
 
 
   preview.src =
     imageURL;
 
-
   preview.style.display =
     "block";
 
-
-  message.style.display =
+  imageMessage.style.display =
     "block";
 
+});
 
-  /*
-    Image load ಆಗಿದೆಯೇ check
-    */
 
-  preview.onload =
-  function(){
+/* =========================
+   IMAGE COMPRESS
+========================= */
 
-    console.log(
-      "Preview loaded successfully"
+function compressImage(file){
+
+  return new Promise(
+    function(resolve,reject){
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(event){
+
+          const img =
+            new Image();
+
+
+          img.onload =
+            function(){
+
+              let width =
+                img.width;
+
+              let height =
+                img.height;
+
+
+              const maxWidth =
+                1200;
+
+
+              if(width > maxWidth){
+
+                height =
+                  height *
+                  maxWidth /
+                  width;
+
+                width =
+                  maxWidth;
+
+              }
+
+
+              const canvas =
+                document.createElement(
+                  "canvas"
+                );
+
+
+              canvas.width =
+                width;
+
+              canvas.height =
+                height;
+
+
+              const ctx =
+                canvas.getContext(
+                  "2d"
+                );
+
+
+              ctx.drawImage(
+                img,
+                0,
+                0,
+                width,
+                height
+              );
+
+
+              const result =
+                canvas.toDataURL(
+                  "image/jpeg",
+                  0.75
+                );
+
+
+              resolve(result);
+
+            };
+
+
+          img.onerror =
+            reject;
+
+
+          img.src =
+            event.target.result;
+
+        };
+
+
+      reader.onerror =
+        reject;
+
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   PUBLISH ARTICLE
+========================= */
+
+async function publishArticle(){
+
+  const title =
+    document
+      .getElementById("title")
+      .value
+      .trim();
+
+
+  const category =
+    document
+      .getElementById("category")
+      .value;
+
+
+  const description =
+    document
+      .getElementById("description")
+      .value
+      .trim();
+
+
+  const file =
+    imageFile.files[0];
+
+
+  if(!title){
+
+    showStatus(
+      "❌ ಮೊದಲು ಲೇಖನದ ಶೀರ್ಷಿಕೆ ಹಾಕಿ.",
+      "error"
     );
 
-  };
+    return;
+
+  }
 
 
-  preview.onerror =
-  function(){
+  if(!description){
 
-    console.log(
-      "Preview loading failed"
+    showStatus(
+      "❌ ಮೊದಲು ಲೇಖನ ಬರೆಯಿರಿ.",
+      "error"
     );
 
-  };
+    return;
 
-};
+  }
+
+
+  const button =
+    document.getElementById(
+      "publishButton"
+    );
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "⏳ ಪ್ರಕಟಿಸಲಾಗುತ್ತಿದೆ...";
+
+
+  try{
+
+
+    let imageData = "";
+
+    let imageName = "";
+
+
+    if(file){
+
+      showStatus(
+        "🖼️ ಚಿತ್ರ ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ...",
+        "success"
+      );
+
+
+      imageData =
+        await compressImage(file);
+
+
+      imageName =
+        file.name;
+
+    }
+
+
+    const formData =
+      new URLSearchParams();
+
+
+    formData.append(
+      "title",
+      title
+    );
+
+
+    formData.append(
+      "category",
+      category
+    );
+
+
+    formData.append(
+      "description",
+      description
+    );
+
+
+    formData.append(
+      "imageData",
+      imageData
+    );
+
+
+    formData.append(
+      "imageName",
+      imageName
+    );
+
+
+    formData.append(
+      "date",
+      new Date()
+        .toLocaleDateString(
+          "en-GB"
+        )
+    );
+
+
+    showStatus(
+      "☁️ Google Drive ಮತ್ತು Sheetಗೆ ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ...",
+      "success"
+    );
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/x-www-form-urlencoded;charset=UTF-8"
+          },
+
+          body:
+            formData.toString()
+        }
+      );
+
+
+    const result =
+      await response.text();
+
+
+    console.log(
+      "Apps Script Response:",
+      result
+    );
+
+
+    if(
+      result.includes(
+        '"success":true'
+      )
+    ){
+
+      showStatus(
+        "✅ ಲೇಖನ ಯಶಸ್ವಿಯಾಗಿ ಪ್ರಕಟಿಸಲಾಗಿದೆ!",
+        "success"
+      );
+
+
+      document
+        .getElementById("title")
+        .value = "";
+
+
+      document
+        .getElementById("description")
+        .value = "";
+
+
+      imageFile.value = "";
+
+
+      preview.src = "";
+
+      preview.style.display =
+        "none";
+
+      imageMessage.style.display =
+        "none";
+
+
+    }else{
+
+      showStatus(
+        "❌ ಪ್ರಕಟಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. Apps Script response ನೋಡಿ.",
+        "error"
+      );
+
+      console.log(result);
+
+    }
+
+
+  }catch(error){
+
+    console.error(error);
+
+
+    showStatus(
+      "❌ ಸಂಪರ್ಕದಲ್ಲಿ ಸಮಸ್ಯೆ ಉಂಟಾಗಿದೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+      "error"
+    );
+
+
+  }
+
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "🚀 ಲೇಖನ ಪ್ರಕಟಿಸಿ";
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(
+  message,
+  type
+){
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  status.textContent =
+    message;
+
+
+  status.className =
+    type;
+
+}
 
 </script>
+
 
 </body>
 
