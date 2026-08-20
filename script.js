@@ -176,33 +176,37 @@ function render(list = articles) {
       "beforeend",
 
       `
-      <article class="article">
+      <a href="article.html?id=${articles.indexOf(article)}" style="text-decoration:none;color:inherit;">
 
-        <div class="thumb">
-          ${imageContent}
-        </div>
+<article class="article">
 
-        <div class="article-body">
+  <div class="thumb">
+    ${imageContent}
+  </div>
 
-          <span class="tag">
-            ${categoryName}
-          </span>
+  <div class="article-body">
 
-          <h3>
-            ${article.title || ""}
-          </h3>
+    <span class="tag">
+      ${categoryName}
+    </span>
 
-          <p>
-            ${article.description || ""}
-          </p>
+    <h3>
+      ${article.title || ""}
+    </h3>
 
-          <span class="date">
-            ${article.date || ""}
-          </span>
+    <p>
+      ${article.description || ""}
+    </p>
 
-        </div>
+    <span class="date">
+      ${article.date || ""}
+    </span>
 
-      </article>
+  </div>
+
+</article>
+
+</a>
       `
     );
 
