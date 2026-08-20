@@ -188,7 +188,48 @@ font-size:17px;
 }
 
 }
+.related-grid{
 
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+
+}
+
+
+.related-card{
+
+background:#f8f9fc;
+padding:15px;
+border-radius:15px;
+cursor:pointer;
+
+}
+
+
+.related-card img{
+
+width:100%;
+height:150px;
+object-fit:cover;
+border-radius:12px;
+
+}
+
+
+.related-card h3{
+
+font-size:18px;
+
+}
+
+
+.related-card span{
+
+color:#0b3d91;
+font-size:14px;
+
+}
 
 </style>
 
@@ -291,7 +332,15 @@ Copy Link
 
 
 </div>
+<br><br>
 
+<hr>
+
+<h2>
+ಇದೇ ರೀತಿಯ ಇತರ ಲೇಖನಗಳು
+</h2>
+
+<div id="related" class="related-grid"></div>
 
 </div>
 
