@@ -533,6 +533,41 @@ onclick="location.href='article.html?id=${index}'">
 
 
 }
+async function likeArticle(){
+
+const id =
+new URLSearchParams(
+window.location.search
+).get("id");
+
+
+const form =
+new URLSearchParams();
+
+form.append("action","like");
+form.append("id",id);
+
+
+const response =
+await fetch(API_URL,{
+method:"POST",
+body:form
+});
+
+
+const result =
+await response.json();
+
+
+if(result.success){
+
+document.getElementById("likeCount")
+.innerText =
+result.likes;
+
+}
+
+}  
 
 
 </script>
