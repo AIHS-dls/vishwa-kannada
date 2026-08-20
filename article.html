@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="kn">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ವಿಶ್ವ ಕನ್ನಡ | Article</title>
+
+<style>
+
+body{
+  margin:0;
+  background:#f5f7fb;
+  font-family:
+  system-ui,
+  "Noto Sans Kannada",
+  sans-serif;
+  color:#172033;
+}
+
+.container{
+  width:min(900px,92%);
+  margin:auto;
+}
+
+.article-box{
+  background:white;
+  margin:30px 0;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+img{
+  width:100%;
+  max-height:500px;
+  object-fit:cover;
+  border-radius:15px;
+}
+
+h1{
+  font-size:32px;
+}
+
+.category{
+  color:#0b3d91;
+  font-weight:bold;
+}
+
+.date{
+  color:#777;
+  margin:10px 0;
+}
+
+.description{
+  font-size:18px;
+  line-height:1.8;
+  white-space:pre-line;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<div class="article-box">
+
+<img id="image" style="display:none;">
+
+<h1 id="title">
+Loading...
+</h1>
+
+<div class="category" id="category"></div>
+
+<div class="date" id="date"></div>
+
+<div class="description" id="description"></div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwTvaf6H0ETygmY5bRJXP_5QgLYaeIYcXAjp0JtCaMB1mCxa_TMYKPaIZ5hTUCyGoqAVg/exec";
+
+
+async function loadArticle(){
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const id =
+params.get("id");
+
+
+const response =
+await fetch(API_URL);
+
+
+const articles =
+await response.json();
+
+
+const article =
+articles[id];
+
+
+if(article){
+
+
+document.getElementById("title").innerText =
+article.title;
+
+
+document.getElementById("category").innerText =
+"Category: " + article.category;
+
+
+document.getElementById("date").innerText =
+"Date: " + article.date;
+
+
+document.getElementById("description").innerText =
+article.description;
+
+
+if(article.image){
+
+const img =
+document.getElementById("image");
+
+img.src =
+article.image;
+
+img.style.display =
+"block";
+
+}
+
+
+}
+
+else{
+
+document.getElementById("title").innerText =
+"Article not found";
+
+}
+
+
+}
+
+
+loadArticle();
+
+</script>
+
+
+</body>
+
+</html>
