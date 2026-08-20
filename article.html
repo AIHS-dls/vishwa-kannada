@@ -2,168 +2,429 @@
 <html lang="kn">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ವಿಶ್ವ ಕನ್ನಡ | Article</title>
+<title>ವಿಶ್ವ ಕನ್ನಡ | ಲೇಖನ</title>
+
+<meta name="description" content="ವಿಶ್ವ ಕನ್ನಡ ಲೇಖನ">
 
 <style>
 
-body{
-  margin:0;
-  background:#f5f7fb;
-  font-family:
-  system-ui,
-  "Noto Sans Kannada",
-  sans-serif;
-  color:#172033;
+*{
+box-sizing:border-box;
 }
+
+body{
+margin:0;
+background:#f5f7fb;
+font-family:
+system-ui,
+"Noto Sans Kannada",
+sans-serif;
+color:#172033;
+}
+
+
+header{
+
+background:#0b3d91;
+color:white;
+padding:18px 0;
+
+}
+
 
 .container{
-  width:min(900px,92%);
-  margin:auto;
+
+width:min(900px,92%);
+margin:auto;
+
 }
+
+
+.header-inner{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+
+.logo{
+
+font-size:24px;
+font-weight:bold;
+
+}
+
+
+.home-btn{
+
+background:white;
+color:#0b3d91;
+padding:8px 15px;
+border-radius:20px;
+text-decoration:none;
+font-weight:bold;
+
+}
+
+
 
 .article-box{
-  background:white;
-  margin:30px 0;
-  padding:25px;
-  border-radius:18px;
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+background:white;
+margin:30px 0;
+padding:25px;
+border-radius:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+
 }
 
-img{
-  width:100%;
-  max-height:500px;
-  object-fit:cover;
-  border-radius:15px;
+
+.article-image{
+
+width:100%;
+max-height:520px;
+object-fit:cover;
+border-radius:18px;
+margin-bottom:20px;
+
 }
 
-h1{
-  font-size:32px;
-}
 
 .category{
-  color:#0b3d91;
-  font-weight:bold;
+
+display:inline-block;
+background:#e8f0ff;
+color:#0b3d91;
+padding:6px 15px;
+border-radius:20px;
+font-weight:bold;
+margin-bottom:15px;
+
 }
 
+
+h1{
+
+font-size:36px;
+line-height:1.4;
+margin:10px 0;
+
+}
+
+
 .date{
-  color:#777;
-  margin:10px 0;
+
+color:#777;
+margin-bottom:20px;
+
+}
+
+
+.description{
+
+font-size:19px;
+line-height:1.9;
+white-space:pre-line;
+
+}
+
+
+
+.share{
+
+display:flex;
+gap:12px;
+margin-top:30px;
+
+}
+
+
+.share button{
+
+border:none;
+padding:12px 18px;
+border-radius:25px;
+cursor:pointer;
+font-size:15px;
+
+}
+
+
+.whatsapp{
+
+background:#25D366;
+color:white;
+
+}
+
+
+.copy{
+
+background:#0b3d91;
+color:white;
+
+}
+
+
+
+@media(max-width:600px){
+
+h1{
+
+font-size:26px;
+
 }
 
 .description{
-  font-size:18px;
-  line-height:1.8;
-  white-space:pre-line;
+
+font-size:17px;
+
 }
 
+}
+
+
 </style>
+
 
 </head>
 
 
 <body>
 
+
+<header>
+
+<div class="container header-inner">
+
+
+<div class="logo">
+
+ವಿ ವಿಶ್ವ ಕನ್ನಡ
+
+</div>
+
+
+<a class="home-btn" href="index.html">
+
+← ಮುಖಪುಟ
+
+</a>
+
+
+</div>
+
+</header>
+
+
+
 <div class="container">
+
 
 <div class="article-box">
 
-<img id="image" style="display:none;">
+
+<img 
+id="image"
+class="article-image"
+style="display:none;">
+
+
+
+<span 
+id="category"
+class="category">
+
+</span>
+
+
 
 <h1 id="title">
+
 Loading...
+
 </h1>
 
-<div class="category" id="category"></div>
 
-<div class="date" id="date"></div>
 
-<div class="description" id="description"></div>
+<div 
+id="date"
+class="date">
+
+</div>
+
+
+
+<div 
+id="description"
+class="description">
+
+</div>
+
+
+
+<div class="share">
+
+
+<button 
+class="whatsapp"
+onclick="shareWhatsApp()">
+
+WhatsApp Share
+
+</button>
+
+
+<button
+class="copy"
+onclick="copyLink()">
+
+Copy Link
+
+</button>
 
 
 </div>
 
+
 </div>
+
+
+</div>
+
+
+
 
 
 <script>
+
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwTvaf6H0ETygmY5bRJXP_5QgLYaeIYcXAjp0JtCaMB1mCxa_TMYKPaIZ5hTUCyGoqAVg/exec";
 
 
+
+let currentArticle = {};
+
+
+
 async function loadArticle(){
 
-const params =
-new URLSearchParams(
-window.location.search
-);
 
 const id =
-params.get("id");
+new URLSearchParams(
+window.location.search
+).get("id");
+
 
 
 const response =
 await fetch(API_URL);
 
 
+
 const articles =
 await response.json();
 
 
-const article =
+
+currentArticle =
 articles[id];
 
 
-if(article){
+
+if(!currentArticle){
+
+document.getElementById("title").innerText =
+"ಲೇಖನ ಸಿಗಲಿಲ್ಲ";
+
+return;
+
+}
+
 
 
 document.getElementById("title").innerText =
-article.title;
+currentArticle.title;
+
 
 
 document.getElementById("category").innerText =
-"Category: " + article.category;
+currentArticle.category;
+
 
 
 document.getElementById("date").innerText =
-"Date: " + article.date;
+"📅 " + currentArticle.date;
+
 
 
 document.getElementById("description").innerText =
-article.description;
+currentArticle.description;
 
 
-if(article.image){
+
+if(currentArticle.image){
 
 const img =
 document.getElementById("image");
 
 img.src =
-article.image;
+currentArticle.image;
 
-img.style.display =
-"block";
-
-}
-
-
-}
-
-else{
-
-document.getElementById("title").innerText =
-"Article not found";
+img.style.display="block";
 
 }
 
 
 }
+
+
+
+function shareWhatsApp(){
+
+const url =
+window.location.href;
+
+
+const text =
+currentArticle.title +
+"\n\n" +
+url;
+
+
+window.open(
+"https://wa.me/?text=" +
+encodeURIComponent(text)
+);
+
+}
+
+
+
+function copyLink(){
+
+navigator.clipboard.writeText(
+window.location.href
+);
+
+
+alert(
+"ಲೇಖನ ಲಿಂಕ್ copy ಆಗಿದೆ!"
+);
+
+}
+
 
 
 loadArticle();
+
 
 </script>
 
