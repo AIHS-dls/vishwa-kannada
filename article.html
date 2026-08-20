@@ -416,6 +416,10 @@ document.getElementById("date").innerText =
 
 document.getElementById("description").innerText =
 currentArticle.description;
+showRelatedArticles(
+  articles,
+  id
+);  
 
 
 
@@ -473,6 +477,50 @@ alert(
 
 
 loadArticle();
+  function showRelatedArticles(articles,currentId){
+
+const box =
+document.getElementById("related");
+
+if(!box) return;
+
+
+const related =
+articles.filter((item,index)=>{
+
+return index != currentId &&
+item.category === currentArticle.category;
+
+}).slice(0,3);
+
+
+box.innerHTML="";
+
+
+related.forEach(item=>{
+
+
+const index =
+articles.indexOf(item);
+
+
+box.innerHTML += `
+
+<div class="related-card"
+onclick="location.href='article.html?id=${index}'">
+
+<h3>${item.title}</h3>
+
+<span>${item.category}</span>
+
+</div>
+
+`;
+
+});
+
+
+}
 
 
 </script>
