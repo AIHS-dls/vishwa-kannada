@@ -22,3 +22,59 @@ cursor:pointer;
 opacity:.9;
 
 }
+
+.comment-box{
+
+margin-top:30px;
+
+}
+
+
+.comment-box input,
+.comment-box textarea{
+
+width:100%;
+padding:12px;
+margin:8px 0;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:16px;
+
+}
+
+
+.comment-box textarea{
+
+height:120px;
+resize:none;
+
+}
+
+
+.comment-box button{
+
+background:#0b3d91;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:20px;
+cursor:pointer;
+
+}
+
+
+.comment-item{
+
+background:#f5f7fb;
+padding:15px;
+margin-top:12px;
+border-radius:12px;
+
+}
+
+
+.comment-item b{
+
+color:#0b3d91;
+
+}
