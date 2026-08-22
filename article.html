@@ -513,6 +513,7 @@ alert(
 
 
 loadArticle();
+loadComments();
   function showRelatedArticles(articles,currentId){
 
 const box =
@@ -588,6 +589,140 @@ if(result.success){
 document.getElementById("likeCount")
 .innerText =
 result.likes;
+
+}
+async function loadComments(){
+
+const id =
+new URLSearchParams(
+window.location.search
+).get("id");
+
+
+const response =
+await fetch(
+API_URL +
+"?action=comments&id=" +
+id
+);
+
+
+const comments =
+await response.json();
+
+
+const box =
+document.getElementById("commentsList");
+
+
+box.innerHTML="";
+
+
+comments.forEach(item=>{
+
+box.innerHTML += `
+
+<div class="comment-item">
+
+<b>${item.name}</b>
+
+<p>${item.comment}</p>
+
+<small>${item.date}</small>
+
+</div>
+
+`;
+
+});
+
+
+}
+
+
+
+async function addComment(){
+
+
+const id =
+new URLSearchParams(
+window.location.search
+).get("id");
+
+
+const name =
+document.getElementById("commentName").value;
+
+
+const comment =
+document.getElementById("commentText").value;
+
+
+
+const form =
+new URLSearchParams();
+
+
+form.append(
+"action",
+"comment"
+);
+
+
+form.append(
+"articleId",
+id
+);
+
+
+form.append(
+"name",
+name
+);
+
+
+form.append(
+"comment",
+comment
+);
+
+
+
+const response =
+await fetch(API_URL,{
+
+method:"POST",
+
+body:form
+
+});
+
+
+const result =
+await response.json();
+
+
+
+if(result.success){
+
+alert(
+"Comment added successfully"
+);
+
+
+document.getElementById("commentText").value="";
+
+
+loadComments();
+
+
+}
+else{
+
+alert(result.error);
+
+}
+
 
 }
 
