@@ -383,357 +383,527 @@ Comment Post ಮಾಡಿ
 
 </div>
 
-
-
-
-
 <script>
-
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwaeZ4DuJM3gDCikPG36kFSNQav74q-6tPqFBUqM0YKbasUi7eskjOUiotjpBxlO4GvuQ/exec";
 
-
-
 let currentArticle = {};
 
 
+/* =========================
+   LOAD ARTICLE
+========================= */
 
 async function loadArticle(){
 
+  const id =
+    new URLSearchParams(
+      window.location.search
+    ).get("id");
 
-const id =
-new URLSearchParams(
-window.location.search
-).get("id");
+  try {
+
+    const response =
+      await fetch(API_URL);
+
+    if(!response.ok){
+      throw new Error("API Error");
+    }
+
+    const articles =
+      await response.json();
+
+    if(!Array.isArray(articles)){
+      throw new Error("Invalid article data");
+    }
+
+    currentArticle =
+      articles[Number(id)];
+
+    if(!currentArticle){
+
+      document.getElementById("title").innerText =
+        "ಲೇಖನ ಸಿಗಲಿಲ್ಲ";
+
+      return;
+
+    }
+
+    document.getElementById("title").innerText =
+      currentArticle.title || "";
+
+    document.getElementById("category").innerText =
+      currentArticle.category || "";
+
+    document.getElementById("date").innerText =
+      "📅 " + (currentArticle.date || "");
+
+    document.getElementById("description").innerText =
+      currentArticle.description || "";
 
 
+    if(currentArticle.image){
 
-const response =
-await fetch(API_URL);
+      const img =
+        document.getElementById("image");
 
+      img.src =
+        currentArticle.image;
 
+      img.style.display =
+        "block";
 
-const articles =
-await response.json();
-
-
-
-currentArticle =
-articles[id];
-
+    }
 
 
-if(!currentArticle){
+    showRelatedArticles(
+      articles,
+      Number(id)
+    );
 
-document.getElementById("title").innerText =
-"ಲೇಖನ ಸಿಗಲಿಲ್ಲ";
 
-return;
+    loadComments();
+
+    loadLikeCount();
+
+
+  } catch(error){
+
+    console.error(
+      "Article loading error:",
+      error
+    );
+
+    document.getElementById("title").innerText =
+      "ಲೇಖನ ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ";
+
+  }
 
 }
 
 
-
-document.getElementById("title").innerText =
-currentArticle.title;
-
-
-
-document.getElementById("category").innerText =
-currentArticle.category;
-
-
-
-document.getElementById("date").innerText =
-"📅 " + currentArticle.date;
-
-
-
-document.getElementById("description").innerText =
-currentArticle.description;
-showRelatedArticles(
-  articles,
-  id
-);  
-
-
-
-if(currentArticle.image){
-
-const img =
-document.getElementById("image");
-
-img.src =
-currentArticle.image;
-
-img.style.display="block";
-
-}
-
-
-}
-
-
+/* =========================
+   WHATSAPP SHARE
+========================= */
 
 function shareWhatsApp(){
 
-const url =
-window.location.href;
+  const url =
+    window.location.href;
 
+  const text =
+    currentArticle.title +
+    "\n\n" +
+    url;
 
-const text =
-currentArticle.title +
-"\n\n" +
-url;
-
-
-window.open(
-"https://wa.me/?text=" +
-encodeURIComponent(text)
-);
+  window.open(
+    "https://wa.me/?text=" +
+    encodeURIComponent(text)
+  );
 
 }
 
 
+/* =========================
+   COPY LINK
+========================= */
 
 function copyLink(){
 
-navigator.clipboard.writeText(
-window.location.href
-);
+  navigator.clipboard.writeText(
+    window.location.href
+  );
+
+  alert(
+    "ಲೇಖನ ಲಿಂಕ್ copy ಆಗಿದೆ!"
+  );
+
+}
 
 
-alert(
-"ಲೇಖನ ಲಿಂಕ್ copy ಆಗಿದೆ!"
-);
+/* =========================
+   RELATED ARTICLES
+========================= */
+
+function showRelatedArticles(
+  articles,
+  currentId
+){
+
+  const box =
+    document.getElementById(
+      "related"
+    );
+
+  if(!box) return;
+
+
+  const related =
+    articles
+      .filter((item,index)=>{
+
+        return (
+          index != currentId &&
+          item.category ===
+          currentArticle.category
+        );
+
+      })
+      .slice(0,3);
+
+
+  box.innerHTML = "";
+
+
+  related.forEach(item=>{
+
+    const index =
+      articles.indexOf(item);
+
+
+    box.innerHTML += `
+
+      <div
+        class="related-card"
+        onclick="
+          location.href=
+          'article.html?id=${index}'
+        "
+      >
+
+        <h3>
+          ${item.title || ""}
+        </h3>
+
+        <span>
+          ${item.category || ""}
+        </span>
+
+      </div>
+
+    `;
+
+  });
 
 }
 
 
+/* =========================
+   LIKE ARTICLE
+========================= */
 
-loadArticle();
-loadComments();
-  function showRelatedArticles(articles,currentId){
-
-const box =
-document.getElementById("related");
-
-if(!box) return;
-
-
-const related =
-articles.filter((item,index)=>{
-
-return index != currentId &&
-item.category === currentArticle.category;
-
-}).slice(0,3);
-
-
-box.innerHTML="";
-
-
-related.forEach(item=>{
-
-
-const index =
-articles.indexOf(item);
-
-
-box.innerHTML += `
-
-<div class="related-card"
-onclick="location.href='article.html?id=${index}'">
-
-<h3>${item.title}</h3>
-
-<span>${item.category}</span>
-
-</div>
-
-`;
-
-});
-
-
-}
 async function likeArticle(){
 
-const id =
-new URLSearchParams(
-window.location.search
-).get("id");
+  const id =
+    new URLSearchParams(
+      window.location.search
+    ).get("id");
 
 
-const form =
-new URLSearchParams();
-
-form.append("action","like");
-form.append("id",id);
+  const form =
+    new URLSearchParams();
 
 
-const response =
-await fetch(API_URL,{
-method:"POST",
-body:form
-});
+  form.append(
+    "action",
+    "like"
+  );
 
 
-const result =
-await response.json();
+  form.append(
+    "id",
+    id
+  );
 
 
-if(result.success){
+  try{
 
-document.getElementById("likeCount")
-.innerText =
-result.likes;
+    const response =
+      await fetch(API_URL,{
+        method:"POST",
+        body:form
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if(result.success){
+
+      document.getElementById(
+        "likeCount"
+      ).innerText =
+        result.likes;
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Like error:",
+      error
+    );
+
+  }
 
 }
+
+
+/* =========================
+   LOAD LIKE COUNT
+========================= */
+
+async function loadLikeCount(){
+
+  const id =
+    new URLSearchParams(
+      window.location.search
+    ).get("id");
+
+
+  try{
+
+    const response =
+      await fetch(
+        API_URL +
+        "?action=likes&id=" +
+        id
+      );
+
+
+    const result =
+      await response.json();
+
+
+    document.getElementById(
+      "likeCount"
+    ).innerText =
+      result.likes || 0;
+
+
+  }catch(error){
+
+    console.error(
+      "Like count error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================
+   LOAD COMMENTS
+========================= */
+
 async function loadComments(){
 
-const id =
-new URLSearchParams(
-window.location.search
-).get("id");
+  const id =
+    new URLSearchParams(
+      window.location.search
+    ).get("id");
 
 
-const response =
-await fetch(
-API_URL +
-"?action=comments&id=" +
-id
-);
+  try{
+
+    const response =
+      await fetch(
+        API_URL +
+        "?action=comments&id=" +
+        id
+      );
 
 
-const comments =
-await response.json();
+    const comments =
+      await response.json();
 
 
-const box =
-document.getElementById("commentsList");
+    const box =
+      document.getElementById(
+        "commentsList"
+      );
 
 
-box.innerHTML="";
+    if(!box) return;
 
 
-comments.forEach(item=>{
+    box.innerHTML = "";
 
-box.innerHTML += `
 
-<div class="comment-item">
+    if(!Array.isArray(comments)){
+      return;
+    }
 
-<b>${item.name}</b>
 
-<p>${item.comment}</p>
+    comments.forEach(item=>{
 
-<small>${item.date}</small>
+      box.innerHTML += `
 
-</div>
+        <div class="comment-item">
 
-`;
+          <b>
+            ${item.name || "Anonymous"}
+          </b>
 
-});
+          <p>
+            ${item.comment || ""}
+          </p>
 
+          <small>
+            ${item.date || ""}
+          </small>
+
+        </div>
+
+      `;
+
+    });
+
+
+  }catch(error){
+
+    console.error(
+      "Comments loading error:",
+      error
+    );
+
+  }
 
 }
 
 
+/* =========================
+   ADD COMMENT
+========================= */
 
 async function addComment(){
 
-alert("Button working");
+  const id =
+    new URLSearchParams(
+      window.location.search
+    ).get("id");
+
+
+  const name =
+    document.getElementById(
+      "commentName"
+    ).value.trim();
+
+
+  const comment =
+    document.getElementById(
+      "commentText"
+    ).value.trim();
+
+
+  if(!comment){
+
+    alert(
+      "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಅಭಿಪ್ರಾಯವನ್ನು ಬರೆಯಿರಿ."
+    );
+
+    return;
+
+  }
+
+
+  const form =
+    new URLSearchParams();
+
+
+  form.append(
+    "action",
+    "comment"
+  );
+
+
+  form.append(
+    "articleId",
+    id
+  );
+
+
+  form.append(
+    "name",
+    name || "Anonymous"
+  );
+
+
+  form.append(
+    "comment",
+    comment
+  );
+
+
+  try{
+
+    const response =
+      await fetch(API_URL,{
+        method:"POST",
+        body:form
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if(result.success){
+
+      alert(
+        "Comment added successfully"
+      );
+
+
+      document.getElementById(
+        "commentName"
+      ).value = "";
+
+
+      document.getElementById(
+        "commentText"
+      ).value = "";
+
+
+      loadComments();
+
+
+    }else{
+
+      alert(
+        result.error ||
+        "Comment add ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+      );
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "Comment error:",
+      error
+    );
+
+    alert(
+      "Comment post ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+    );
+
+  }
 
 }
 
-const id =
-new URLSearchParams(
-window.location.search
-).get("id");
 
+/* =========================
+   START
+========================= */
 
-const name =
-document.getElementById("commentName").value;
-
-
-const comment =
-document.getElementById("commentText").value;
-
-
-
-const form =
-new URLSearchParams();
-
-
-form.append(
-"action",
-"comment"
-);
-
-
-form.append(
-"articleId",
-id
-);
-
-
-form.append(
-"name",
-name
-);
-
-
-form.append(
-"comment",
-comment
-);
-
-
-
-const response =
-await fetch(API_URL,{
-
-method:"POST",
-
-body:form
-
-});
-
-
-const result =
-await response.json();
-
-
-
-if(result.success){
-
-alert(
-"Comment added successfully"
-);
-
-
-document.getElementById("commentText").value="";
-
-
-loadComments();
-
-
-}
-else{
-
-alert(result.error);
-
-}
-
-
-}
-
-}  
-
+loadArticle();
 
 </script>
-
 
 </body>
 
