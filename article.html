@@ -386,42 +386,27 @@ Comment Post ಮಾಡಿ
 <script>
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwaeZ4DuJM3gDCikPG36kFSNQav74q-6tPqFBUqM0YKbasUi7eskjOUiotjpBxlO4GvuQ/exec";
+"https://script.google.com/macros/s/AKfycbwTvaf6H0ETygmY5bRJXP_5QgLYaeIYcXAjp0JtCaMB1mCxa_TMYKPaIZ5hTUCyGoqAVg/exec";
 
 let currentArticle = {};
+let allArticles = [];
 
 
 /* =========================
    LOAD ARTICLE
 ========================= */
 
-async function loadArticle(){
-
-  const id =
-    new URLSearchParams(
-      window.location.search
-    ).get("id");
+async function loadArticle() {
 
   try {
 
-    const response =
-      await fetch(API_URL);
+    const id =
+      new URLSearchParams(
+        window.location.search
+      ).get("id");
 
-    if(!response.ok){
-      throw new Error("API Error");
-    }
 
-    const articles =
-      await response.json();
-
-    if(!Array.isArray(articles)){
-      throw new Error("Invalid article data");
-    }
-
-    currentArticle =
-      articles[Number(id)];
-
-    if(!currentArticle){
+    if (id === null) {
 
       document.getElementById("title").innerText =
         "ಲೇಖನ ಸಿಗಲಿಲ್ಲ";
@@ -430,20 +415,69 @@ async function loadArticle(){
 
     }
 
+
+    const response =
+      await fetch(API_URL);
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "API connection failed"
+      );
+
+    }
+
+
+    const articles =
+      await response.json();
+
+
+    if (!Array.isArray(articles)) {
+
+      throw new Error(
+        "Invalid API response"
+      );
+
+    }
+
+
+    allArticles = articles;
+
+
+    currentArticle =
+      articles[Number(id)];
+
+
+    if (!currentArticle) {
+
+      document.getElementById("title").innerText =
+        "ಲೇಖನ ಸಿಗಲಿಲ್ಲ";
+
+      return;
+
+    }
+
+
     document.getElementById("title").innerText =
       currentArticle.title || "";
+
 
     document.getElementById("category").innerText =
       currentArticle.category || "";
 
+
     document.getElementById("date").innerText =
-      "📅 " + (currentArticle.date || "");
+      currentArticle.date
+        ? "📅 " + currentArticle.date
+        : "";
+
 
     document.getElementById("description").innerText =
       currentArticle.description || "";
 
 
-    if(currentArticle.image){
+    if (currentArticle.image) {
 
       const img =
         document.getElementById("image");
@@ -463,20 +497,26 @@ async function loadArticle(){
     );
 
 
-    loadComments();
-
-    loadLikeCount();
-
-
-  } catch(error){
-
-    console.error(
-      "Article loading error:",
-      error
+    loadLikes(
+      Number(id)
     );
 
+
+    loadComments(
+      Number(id)
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
     document.getElementById("title").innerText =
-      "ಲೇಖನ ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ";
+      "ಲೇಖನ ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ";
+
+    document.getElementById("description").innerText =
+      error.message;
 
   }
 
@@ -487,19 +527,22 @@ async function loadArticle(){
    WHATSAPP SHARE
 ========================= */
 
-function shareWhatsApp(){
+function shareWhatsApp() {
 
   const url =
     window.location.href;
 
+
   const text =
-    currentArticle.title +
+    (currentArticle.title || "") +
     "\n\n" +
     url;
 
+
   window.open(
     "https://wa.me/?text=" +
-    encodeURIComponent(text)
+    encodeURIComponent(text),
+    "_blank"
   );
 
 }
@@ -509,11 +552,12 @@ function shareWhatsApp(){
    COPY LINK
 ========================= */
 
-function copyLink(){
+function copyLink() {
 
   navigator.clipboard.writeText(
     window.location.href
   );
+
 
   alert(
     "ಲೇಖನ ಲಿಂಕ್ copy ಆಗಿದೆ!"
@@ -529,55 +573,49 @@ function copyLink(){
 function showRelatedArticles(
   articles,
   currentId
-){
+) {
 
   const box =
-    document.getElementById(
-      "related"
-    );
+    document.getElementById("related");
 
-  if(!box) return;
+
+  if (!box) return;
 
 
   const related =
     articles
-      .filter((item,index)=>{
-
-        return (
-          index != currentId &&
-          item.category ===
+      .map((item, index) => ({
+        item,
+        index
+      }))
+      .filter(obj =>
+        obj.index !== currentId &&
+        obj.item.category ===
           currentArticle.category
-        );
-
-      })
-      .slice(0,3);
+      )
+      .slice(0, 3);
 
 
   box.innerHTML = "";
 
 
-  related.forEach(item=>{
-
-    const index =
-      articles.indexOf(item);
-
+  related.forEach(obj => {
 
     box.innerHTML += `
 
       <div
         class="related-card"
         onclick="
-          location.href=
-          'article.html?id=${index}'
+          location.href='article.html?id=${obj.index}'
         "
       >
 
         <h3>
-          ${item.title || ""}
+          ${obj.item.title || ""}
         </h3>
 
         <span>
-          ${item.category || ""}
+          ${obj.item.category || ""}
         </span>
 
       </div>
@@ -590,80 +628,12 @@ function showRelatedArticles(
 
 
 /* =========================
-   LIKE ARTICLE
+   LOAD LIKES
 ========================= */
 
-async function likeArticle(){
+async function loadLikes(id) {
 
-  const id =
-    new URLSearchParams(
-      window.location.search
-    ).get("id");
-
-
-  const form =
-    new URLSearchParams();
-
-
-  form.append(
-    "action",
-    "like"
-  );
-
-
-  form.append(
-    "id",
-    id
-  );
-
-
-  try{
-
-    const response =
-      await fetch(API_URL,{
-        method:"POST",
-        body:form
-      });
-
-
-    const result =
-      await response.json();
-
-
-    if(result.success){
-
-      document.getElementById(
-        "likeCount"
-      ).innerText =
-        result.likes;
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Like error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================
-   LOAD LIKE COUNT
-========================= */
-
-async function loadLikeCount(){
-
-  const id =
-    new URLSearchParams(
-      window.location.search
-    ).get("id");
-
-
-  try{
+  try {
 
     const response =
       await fetch(
@@ -682,12 +652,90 @@ async function loadLikeCount(){
     ).innerText =
       result.likes || 0;
 
+  }
 
-  }catch(error){
+  catch (error) {
 
     console.error(
-      "Like count error:",
+      "Likes error:",
       error
+    );
+
+  }
+
+}
+
+
+/* =========================
+   LIKE ARTICLE
+========================= */
+
+async function likeArticle() {
+
+  try {
+
+    const id =
+      new URLSearchParams(
+        window.location.search
+      ).get("id");
+
+
+    const form =
+      new URLSearchParams();
+
+
+    form.append(
+      "action",
+      "like"
+    );
+
+
+    form.append(
+      "id",
+      id
+    );
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
+          body: form
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (result.success) {
+
+      document.getElementById(
+        "likeCount"
+      ).innerText =
+        result.likes;
+
+    }
+
+    else {
+
+      alert(
+        result.error ||
+        "Like ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ"
+      );
+
+    }
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Like ಮಾಡುವಾಗ error ಬಂದಿದೆ"
     );
 
   }
@@ -699,15 +747,9 @@ async function loadLikeCount(){
    LOAD COMMENTS
 ========================= */
 
-async function loadComments(){
+async function loadComments(id) {
 
-  const id =
-    new URLSearchParams(
-      window.location.search
-    ).get("id");
-
-
-  try{
+  try {
 
     const response =
       await fetch(
@@ -727,18 +769,26 @@ async function loadComments(){
       );
 
 
-    if(!box) return;
-
-
     box.innerHTML = "";
 
 
-    if(!Array.isArray(comments)){
+    if (
+      !Array.isArray(comments) ||
+      comments.length === 0
+    ) {
+
+      box.innerHTML = `
+        <p>
+          ಇನ್ನೂ ಯಾವುದೇ ಅಭಿಪ್ರಾಯಗಳಿಲ್ಲ.
+        </p>
+      `;
+
       return;
+
     }
 
 
-    comments.forEach(item=>{
+    comments.forEach(item => {
 
       box.innerHTML += `
 
@@ -762,11 +812,12 @@ async function loadComments(){
 
     });
 
+  }
 
-  }catch(error){
+  catch (error) {
 
     console.error(
-      "Comments loading error:",
+      "Comments error:",
       error
     );
 
@@ -779,97 +830,120 @@ async function loadComments(){
    ADD COMMENT
 ========================= */
 
-async function addComment(){
+async function addComment() {
 
-  const id =
-    new URLSearchParams(
-      window.location.search
-    ).get("id");
+  try {
 
-
-  const name =
-    document.getElementById(
-      "commentName"
-    ).value.trim();
+    const id =
+      new URLSearchParams(
+        window.location.search
+      ).get("id");
 
 
-  const comment =
-    document.getElementById(
-      "commentText"
-    ).value.trim();
+    const name =
+      document.getElementById(
+        "commentName"
+      ).value.trim();
 
 
-  if(!comment){
+    const comment =
+      document.getElementById(
+        "commentText"
+      ).value.trim();
 
-    alert(
-      "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಅಭಿಪ್ರಾಯವನ್ನು ಬರೆಯಿರಿ."
+
+    if (!comment) {
+
+      alert(
+        "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಅಭಿಪ್ರಾಯ ಬರೆಯಿರಿ."
+      );
+
+      return;
+
+    }
+
+
+    const form =
+      new URLSearchParams();
+
+
+    form.append(
+      "action",
+      "comment"
     );
 
-    return;
+
+    form.append(
+      "articleId",
+      id
+    );
+
+
+    form.append(
+      "name",
+      name || "Anonymous"
+    );
+
+
+    form.append(
+      "comment",
+      comment
+    );
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
+          body: form
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (result.success) {
+
+      alert(
+        "Comment added successfully!"
+      );
+
+
+      document.getElementById(
+        "commentText"
+      ).value = "";
+
+
+      loadComments(
+        Number(id)
+      );
+
+    }
+
+    else {
+
+      alert(
+        result.error ||
+        "Comment add ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+      );
+
+    }
 
   }
 
+  catch (error) {
 
-  const form =
-    new URLSearchParams();
+    console.error(error);
 
+    alert(
+      "Comment ಮಾಡುವಾಗ error ಬಂದಿದೆ: " +
+      error.message
+    );
 
-  form.append(
-    "action",
-    "comment"
-  );
-
-
-  form.append(
-    "articleId",
-    id
-  );
-
-
-  form.append(
-    "name",
-    name || "Anonymous"
-  );
-
-
-  form.append(
-    "comment",
-    comment
-  );
-
-
-  try{
-
-    const response =
-await fetch(API_URL,{
-  method:"POST",
-  body:form
-});
-
-const text =
-await response.text();
-
-console.log("POST RESPONSE:", text);
-
-let result;
-
-try {
-
-  result = JSON.parse(text);
-
-} catch(error) {
-
-  console.error(
-    "Server returned:",
-    text
-  );
-
-  alert(
-    "Apps Script JSON response ಕೊಡುತ್ತಿಲ್ಲ.\n\n" +
-    text
-  );
-
-  return;
+  }
 
 }
 
