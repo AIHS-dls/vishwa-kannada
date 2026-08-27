@@ -671,78 +671,79 @@ async function loadLikes(id) {
    LIKE ARTICLE
 ========================= */
 
-async function likeArticle() {
+async function likeArticle(){
 
-  try {
-
-    const id =
-      new URLSearchParams(
-        window.location.search
-      ).get("id");
+const id =
+new URLSearchParams(
+window.location.search
+).get("id");
 
 
-    const form =
-      new URLSearchParams();
+if(localStorage.getItem("liked_" + id)){
 
+alert("ನೀವು ಈಗಾಗಲೇ Like ಮಾಡಿದ್ದೀರಿ ❤️");
 
-    form.append(
-      "action",
-      "like"
-    );
-
-
-    form.append(
-      "id",
-      id
-    );
-
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: "POST",
-          body: form
-        }
-      );
-
-
-    const result =
-      await response.json();
-
-
-    if (result.success) {
-
-      document.getElementById(
-        "likeCount"
-      ).innerText =
-        result.likes;
-
-    }
-
-    else {
-
-      alert(
-        result.error ||
-        "Like ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ"
-      );
-
-    }
-
-  }
-
-  catch (error) {
-
-    console.error(error);
-
-    alert(
-      "Like ಮಾಡುವಾಗ error ಬಂದಿದೆ"
-    );
-
-  }
+return;
 
 }
 
+
+const form =
+new URLSearchParams();
+
+
+form.append(
+"action",
+"like"
+);
+
+
+form.append(
+"id",
+id
+);
+
+
+const response =
+await fetch(API_URL,{
+
+method:"POST",
+
+body:form
+
+});
+
+
+const result =
+await response.json();
+
+
+if(result.success){
+
+
+document.getElementById(
+"likeCount"
+).innerText =
+result.likes;
+
+
+localStorage.setItem(
+"liked_" + id,
+"yes"
+);
+
+
+}
+
+else{
+
+alert(
+result.error || "Like failed"
+);
+
+}
+
+}
 
 /* =========================
    LOAD COMMENTS
