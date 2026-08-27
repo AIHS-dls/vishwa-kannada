@@ -385,10 +385,6 @@ function toggleMenu() {
 
 }
 
-
-// Start
-loadArticles();
-
 async function deleteArticle(id){
 
   if(!confirm("ಈ ಲೇಖನವನ್ನು delete ಮಾಡಬೇಕೆ?")){
