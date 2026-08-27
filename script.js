@@ -202,12 +202,12 @@ function render(list = articles) {
     </span>
     <div class="admin-actions">
 
-<button onclick="event.preventDefault(); editArticle(${articles.indexOf(article)})">
+<button type="button" onclick="editArticle(${articles.indexOf(article)})">
 Edit
 </button>
 
 
-<button onclick="event.preventDefault(); deleteArticle(${articles.indexOf(article)})">
+<button type="button" onclick="deleteArticle(${articles.indexOf(article)})">
 Delete
 </button>
 
