@@ -201,6 +201,18 @@ function render(list = articles) {
     <span class="date">
       ${article.date || ""}
     </span>
+    <div class="admin-actions">
+
+<button onclick="event.preventDefault(); editArticle(${articles.indexOf(article)})">
+Edit
+</button>
+
+
+<button onclick="event.preventDefault(); deleteArticle(${articles.indexOf(article)})">
+Delete
+</button>
+
+</div>
 
   </div>
 
