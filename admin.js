@@ -4,6 +4,7 @@ async function deleteArticle(id){
     return;
   }
 
+
   const form = new URLSearchParams();
 
   form.append("action","delete");
@@ -14,41 +15,16 @@ async function deleteArticle(id){
   const response =
     await fetch(API_URL,{
       method:"POST",
-      headers:{
-        "Content-Type":
-        "application/x-www-form-urlencoded"
-      },
-      body:form.toString()
+      body:form
     });
 
 
   const text =
-  await response.text();
-
-console.log(text);
-
-const result =
-  JSON.parse(text);
-
-  if(result.success){
-
-    alert("Article deleted");
-
-    location.reload();
-
-  }
-  else{
-
-    alert(result.error);
-
-  }
-
-}
+    await response.text();
 
 
+  alert(text);
 
-function editArticle(id){
-
-  alert("Edit option coming next");
+  console.log(text);
 
 }
