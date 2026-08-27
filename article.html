@@ -749,84 +749,53 @@ result.error || "Like failed"
    LOAD COMMENTS
 ========================= */
 
-async function loadComments(id) {
+async function loadComments(){
 
-  try {
-
-    const response =
-      await fetch(
-        API_URL +
-        "?action=comments&id=" +
-        id
-      );
+const id =
+new URLSearchParams(
+window.location.search
+).get("id");
 
 
-    const comments =
-      await response.json();
+const response =
+await fetch(
+API_URL +
+"?action=comments&id=" +
+id
+);
 
 
-    const box =
-      document.getElementById(
-        "commentsList"
-      );
+const comments =
+await response.json();
 
 
-    box.innerHTML = "";
+const box =
+document.getElementById("commentsList");
 
 
-    if (
-      !Array.isArray(comments) ||
-      comments.length === 0
-    ) {
-
-      box.innerHTML = `
-        <p>
-          ಇನ್ನೂ ಯಾವುದೇ ಅಭಿಪ್ರಾಯಗಳಿಲ್ಲ.
-        </p>
-      `;
-
-      return;
-
-    }
+box.innerHTML="";
 
 
-    comments.forEach(item => {
+comments.forEach(item=>{
 
-      box.innerHTML += `
+box.innerHTML += `
 
-        <div class="comment-item">
+<div class="comment-item">
 
-          <b>
-            ${item.name || "Anonymous"}
-          </b>
+<b>${item.name}</b>
 
-          <p>
-            ${item.comment || ""}
-          </p>
+<p>${item.comment}</p>
 
-          <small>
-            ${item.date || ""}
-          </small>
+<small>${item.date}</small>
 
-        </div>
+</div>
 
-      `;
+`;
 
-    });
+});
 
-  }
-
-  catch (error) {
-
-    console.error(
-      "Comments error:",
-      error
-    );
-
-  }
 
 }
-
 
 /* =========================
    ADD COMMENT
