@@ -775,6 +775,73 @@ function showStatus(
 
 }
 
+  async function loadAdminArticles(){
+
+  const box =
+    document.getElementById("articles");
+
+
+  try{
+
+    const response =
+      await fetch(API_URL);
+
+
+    const data =
+      await response.json();
+
+
+    box.innerHTML = "";
+
+
+    data.forEach((article,index)=>{
+
+
+      box.innerHTML += `
+
+      <div style="
+        background:#f5f7fb;
+        padding:15px;
+        margin-top:15px;
+        border-radius:10px;
+      ">
+
+        <h3>${article.title}</h3>
+
+        <p>${article.date}</p>
+
+
+        <button onclick="editArticle(${index})">
+        ✏️ Edit
+        </button>
+
+
+        <button onclick="deleteArticle(${index})">
+        🗑️ Delete
+        </button>
+
+
+      </div>
+
+      `;
+
+
+    });
+
+
+  }
+  catch(error){
+
+    box.innerHTML =
+    "Articles load ಆಗಲಿಲ್ಲ";
+
+  }
+
+}
+
+
+loadAdminArticles();
+
 </script>
 
 
