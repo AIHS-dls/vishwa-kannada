@@ -387,10 +387,11 @@ function toggleMenu() {
 
 async function deleteArticle(id){
 
+  alert("Delete clicked ID = " + id);
+
   if(!confirm("ಈ ಲೇಖನವನ್ನು delete ಮಾಡಬೇಕೆ?")){
     return;
   }
-
   const form = new URLSearchParams();
 
   form.append("action","delete");
