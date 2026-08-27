@@ -22,9 +22,13 @@ async function deleteArticle(id){
     });
 
 
-  const result =
-    await response.json();
+  const text =
+  await response.text();
 
+console.log(text);
+
+const result =
+  JSON.parse(text);
 
   if(result.success){
 
