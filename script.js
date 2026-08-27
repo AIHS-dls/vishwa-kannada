@@ -176,8 +176,7 @@ function render(list = articles) {
       "beforeend",
 
       `
-      <a href="article.html?id=${articles.indexOf(article)}" style="text-decoration:none;color:inherit;">
-
+      <div>
 <article class="article">
 
   <div class="thumb">
@@ -218,8 +217,7 @@ Delete
 
 </article>
 
-</a>
-      `
+</div>      `
     );
 
   });
