@@ -832,123 +832,101 @@ async function loadComments(id) {
    ADD COMMENT
 ========================= */
 
-async function addComment() {
+async function addComment(){
 
-  try {
-
-    const id =
-      new URLSearchParams(
-        window.location.search
-      ).get("id");
+const id =
+new URLSearchParams(
+window.location.search
+).get("id");
 
 
-    const name =
-      document.getElementById(
-        "commentName"
-      ).value.trim();
+const name =
+document.getElementById("commentName").value;
 
 
-    const comment =
-      document.getElementById(
-        "commentText"
-      ).value.trim();
+const comment =
+document.getElementById("commentText").value;
 
 
-    if (!comment) {
+if(!comment.trim()){
 
-      alert(
-        "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಅಭಿಪ್ರಾಯ ಬರೆಯಿರಿ."
-      );
+alert("ಅಭಿಪ್ರಾಯ ಬರೆಯಿರಿ");
 
-      return;
-
-    }
-
-
-    const form =
-      new URLSearchParams();
-
-
-    form.append(
-      "action",
-      "comment"
-    );
-
-
-    form.append(
-      "articleId",
-      id
-    );
-
-
-    form.append(
-      "name",
-      name || "Anonymous"
-    );
-
-
-    form.append(
-      "comment",
-      comment
-    );
-
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: "POST",
-          body: form
-        }
-      );
-
-
-    const result =
-      await response.json();
-
-
-    if (result.success) {
-
-      alert(
-        "Comment added successfully!"
-      );
-
-
-      document.getElementById(
-        "commentText"
-      ).value = "";
-
-
-      loadComments(
-        Number(id)
-      );
-
-    }
-
-    else {
-
-      alert(
-        result.error ||
-        "Comment add ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
-      );
-
-    }
-
-  }
-
-  catch (error) {
-
-    console.error(error);
-
-    alert(
-      "Comment ಮಾಡುವಾಗ error ಬಂದಿದೆ: " +
-      error.message
-    );
-
-  }
+return;
 
 }
 
+
+const form =
+new URLSearchParams();
+
+
+form.append(
+"action",
+"comment"
+);
+
+
+form.append(
+"articleId",
+id
+);
+
+
+form.append(
+"name",
+name
+);
+
+
+form.append(
+"comment",
+comment
+);
+
+
+
+const response =
+await fetch(API_URL,{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/x-www-form-urlencoded;charset=UTF-8"
+},
+
+body:
+form.toString()
+
+});
+
+
+const result =
+await response.json();
+
+
+
+if(result.success){
+
+alert(
+"Comment successfully added"
+);
+
+
+document.getElementById("commentText").value="";
+
+
+loadComments();
+
+}
+else{
+
+alert(result.error);
+
+}
+
+}
 
 /* =========================
    START
