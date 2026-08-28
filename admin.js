@@ -1,5 +1,6 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbwTvaf6H0ETygmY5bRJXP_5QgLYaeIYcXAjp0JtCaMB1mCxa_TMYKPaIZ5hTUCyGoqAVg/exec";
 
+alert("admin.js loaded");
 
 async function deleteArticle(id){
 
