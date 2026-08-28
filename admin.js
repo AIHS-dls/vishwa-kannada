@@ -16,9 +16,14 @@ async function deleteArticle(id){
 
 
   const response =
-    await fetch(API_URL,{
-      method:"POST",
-      body:form
+  await fetch(API_URL,{
+    method:"POST",
+    headers:{
+      "Content-Type":
+      "application/x-www-form-urlencoded;charset=UTF-8"
+    },
+    body:form.toString()
+  });
     });
 
 
